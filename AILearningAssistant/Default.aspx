@@ -1,925 +1,549 @@
 ﻿<%@ Page Title="AI Learning Assistant"
     Language="C#"
     MasterPageFile="~/Site.Master" %>
+
 <asp:Content ID="BodyContent"
     ContentPlaceHolderID="MainContent"
     runat="server">
 
 <style>
 
-    /* =========================================
-       PAGE
-    ========================================= */
-
-    html,
-    body {
-        margin: 0;
-        padding: 0;
+    * {
+        box-sizing: border-box;
     }
 
     .assistant-page {
         width: 100%;
-        height: calc(100vh - 0px);
-
+        min-height: 100vh;
+        background: #f6f7fb;
         display: flex;
         flex-direction: column;
-
-        background: #f4f6f9;
-
         overflow: hidden;
     }
 
-
-    /* =========================================
-       COMPANY LOGO
-    ========================================= */
+    /* =========================
+       COMPANY LOGO SECTION
+       ========================= */
 
     .company-logo-section {
         width: 100%;
-        height: 70px;
-
-        flex-shrink: 0;
-
+        height: 90px;
         background-color: #ffffff;
-
         background-image: url('Images/company-logo.png');
-
         background-repeat: no-repeat;
-
         background-position: center;
-
         background-size: contain;
-
-        border-bottom: 1px solid #e5e8ee;
+        border-bottom: 1px solid #e7e9ef;
+        flex-shrink: 0;
     }
 
-
-    /* =========================================
+    /* =========================
        MAIN AREA
-    ========================================= */
+       ========================= */
 
     .assistant-main {
-
         flex: 1;
-
-        min-height: 0;
-
         display: flex;
-
         justify-content: center;
-
         align-items: center;
-
-        padding: 24px 20px;
-
-        box-sizing: border-box;
-
-        overflow: hidden;
+        padding: 22px;
+        min-height: 0;
     }
 
-
-    /* =========================================
+    /* =========================
        CHAT WRAPPER
-    ========================================= */
+       ========================= */
 
     .chat-wrapper {
-
-        width: 100%;
-
-        max-width: 1100px;
-
-        height: 100%;
-
-        max-height: 820px;
-
-        display: flex;
-
-        flex-direction: column;
-
+        width: min(1100px, 100%);
+        height: calc(100vh - 135px);
+        min-height: 560px;
+        max-height: 850px;
         background: #ffffff;
-
-        border: 1px solid #e1e5eb;
-
-        border-radius: 22px;
-
+        border-radius: 24px;
+        border: 1px solid #e4e7ee;
+        box-shadow: 0 16px 45px rgba(31, 41, 55, 0.10);
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
-
-        box-shadow:
-            0 12px 35px rgba(31, 41, 55, 0.08);
     }
 
-
-    /* =========================================
-       HEADER
-    ========================================= */
+    /* =========================
+       CHAT HEADER
+       ========================= */
 
     .chat-header {
-
-        height: 96px;
-
-        flex-shrink: 0;
-
+        height: 78px;
+        padding: 14px 20px;
         display: flex;
-
         align-items: center;
-
-        padding: 0 28px;
-
+        justify-content: space-between;
+        border-bottom: 1px solid #edf0f4;
         background: #ffffff;
-
-        border-bottom: 1px solid #e5e8ee;
+        flex-shrink: 0;
     }
 
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+    }
 
     .ai-avatar {
-
-        width: 58px;
-        height: 58px;
-
-        flex-shrink: 0;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        margin-right: 16px;
-
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
-
-        background:
-            linear-gradient(
-                135deg,
-                #667eea,
-                #764ba2
-            );
-
+        background: linear-gradient(135deg, #667eea, #764ba2);
         color: #ffffff;
-
-        font-size: 23px;
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 21px;
         font-weight: 700;
-
-        box-shadow:
-            0 8px 20px rgba(102, 126, 234, 0.25);
+        box-shadow: 0 5px 14px rgba(102, 126, 234, 0.25);
     }
-
 
     .header-info {
-
         display: flex;
-
         flex-direction: column;
-
-        gap: 5px;
+        gap: 3px;
     }
-
 
     .header-title {
-
-        font-size: 23px;
-
-        font-weight: 700;
-
         color: #172033;
+        font-size: 17px;
+        font-weight: 700;
     }
-
 
     .online-status {
-
         display: flex;
-
         align-items: center;
-
-        gap: 8px;
-
-        font-size: 14px;
-
-        color: #16a34a;
+        gap: 6px;
+        color: #6b7280;
+        font-size: 12px;
     }
-
 
     .online-dot {
-
-        width: 9px;
-        height: 9px;
-
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
-
-        background: #22c55e;
+        background: #35b86f;
     }
-
-
-    /* =========================================
-       CALL BUTTON
-    ========================================= */
 
     .call-button {
-
-        width: 46px;
-        height: 46px;
-
-        margin-left: auto;
-
+        width: 42px;
+        height: 42px;
         border: none;
-
         border-radius: 50%;
-
-        background: #f1f3f8;
-
+        background: #f2f3f8;
         color: #667eea;
-
-        font-size: 20px;
-
+        font-size: 18px;
         cursor: pointer;
-
-        transition: 0.2s ease;
+        transition: all 0.2s ease;
     }
 
-
     .call-button:hover {
-
-        background: #667eea;
-
+        background: linear-gradient(135deg, #667eea, #764ba2);
         color: #ffffff;
-
         transform: scale(1.05);
     }
 
-
-    /* =========================================
+    /* =========================
        CHAT AREA
-    ========================================= */
+       ========================= */
 
     .chat-area {
-
         position: relative;
-
         flex: 1;
-
-        min-height: 0;
-
         overflow-y: auto;
-
         overflow-x: hidden;
-
-        padding: 36px;
-
-        box-sizing: border-box;
-
-        background: #fbfcfe;
+        padding: 26px;
+        background: #fafbfe;
+        scroll-behavior: smooth;
     }
 
-
-    /* =========================================
-       SCROLLBAR
-    ========================================= */
-
     .chat-area::-webkit-scrollbar {
-
         width: 7px;
     }
 
-
     .chat-area::-webkit-scrollbar-track {
-
         background: transparent;
     }
 
-
     .chat-area::-webkit-scrollbar-thumb {
-
-        background: #d5d9e2;
-
+        background: #d7dbe5;
         border-radius: 10px;
     }
 
-
-    /* =========================================
-       WATERMARK
-    ========================================= */
-
     .chat-area::before {
-
         content: "";
-
         position: absolute;
-
-        right: 35px;
-
-        bottom: 30px;
-
-        width: 230px;
-
-        height: 100px;
-
-        background-image:
-            url('Images/company-logo.png');
-
+        inset: 0;
+        background-image: url('Images/company-logo.png');
         background-repeat: no-repeat;
-
         background-position: center;
-
-        background-size: contain;
-
+        background-size: 280px;
         opacity: 0.035;
-
         pointer-events: none;
     }
 
-
-    /* =========================================
-       MESSAGE
-    ========================================= */
-
-    .message-row {
-
-        display: flex;
-
-        width: 100%;
-
-        margin-bottom: 24px;
-
+    .chat-content {
         position: relative;
-
         z-index: 1;
     }
 
+    /* =========================
+       MESSAGES
+       ========================= */
 
-    .message-row.bot {
+    .message-row {
+        width: 100%;
+        display: flex;
+        margin-bottom: 18px;
+    }
 
+    .message-row.bot-row {
         justify-content: flex-start;
     }
 
+    .message-row.user-row {
+        justify-content: flex-end;
+    }
 
     .message {
-
-        max-width: 680px;
-
-        padding: 22px 24px;
-
-        border-radius: 18px;
-
-        font-size: 16px;
-
-        line-height: 1.65;
-
-        color: #172033;
-
-        box-sizing: border-box;
+        max-width: 78%;
+        padding: 13px 16px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.55;
     }
-
 
     .message.bot {
-
         background: #ffffff;
-
-        border: 1px solid #dfe5ee;
-
-        box-shadow:
-            0 5px 15px rgba(31, 41, 55, 0.05);
+        color: #374151;
+        border: 1px solid #e5e8ee;
+        border-top-left-radius: 5px;
+        box-shadow: 0 4px 12px rgba(31, 41, 55, 0.04);
     }
 
+    .message.user {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #ffffff;
+        border-top-right-radius: 5px;
+    }
 
     .bot-title {
-
-        margin-bottom: 8px;
-
-        font-size: 18px;
-
+        font-size: 12px;
         font-weight: 700;
-
-        color: #29466d;
+        color: #667eea;
+        margin-bottom: 5px;
     }
 
-
-    /* =========================================
-       AVAILABLE DOMAINS
-    ========================================= */
+    /* =========================
+       AVAILABLE DOMAIN BUTTON
+       ========================= */
 
     .available-domain-button {
-
-        margin-top: 16px;
-
-        padding: 12px 24px;
-
-        border: 1px solid #dbe2ea;
-
-        border-radius: 24px;
-
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 22px;
+        margin-top: 4px;
         background: #ffffff;
-
-        color: #53657d;
-
-        font-size: 14px;
-
+        border: 1px solid #dfe3ea;
+        border-radius: 13px;
+        color: #4b5563;
+        font-size: 13px;
         font-weight: 700;
-
         cursor: pointer;
-
-        transition:
-            background 0.2s ease,
-            color 0.2s ease,
-            border 0.2s ease,
-            box-shadow 0.2s ease;
+        transition: all 0.2s ease;
     }
 
-
-    /* =========================================
-       AVAILABLE DOMAIN HOVER BLINK
-    ========================================= */
-
     .available-domain-button:hover {
-
-        animation:
-            buttonBlink
-            0.85s
-            ease-in-out
-            infinite;
-
+        animation: buttonBlink 0.85s ease-in-out infinite;
         border-color: #667eea;
     }
 
-
-    /* =========================================
-       AVAILABLE DOMAIN SELECTED
-    ========================================= */
-
     .available-domain-button.selected {
-
-        background:
-            linear-gradient(
-                135deg,
-                #667eea,
-                #764ba2
-            );
-
+        background: linear-gradient(135deg, #667eea, #764ba2);
         border-color: transparent;
-
         color: #ffffff;
-
         cursor: default;
-
-        box-shadow:
-            0 6px 16px
-            rgba(102, 126, 234, 0.22);
+        box-shadow: 0 6px 16px rgba(102, 126, 234, 0.22);
     }
-
 
     .available-domain-button.selected:hover {
-
         animation: none;
+    }
 
-        background:
-            linear-gradient(
-                135deg,
-                #667eea,
-                #764ba2
-            );
+    /* =========================
+       DOMAIN SECTION
+       ========================= */
 
+    .domain-container {
+        margin-top: 18px;
+        margin-bottom: 20px;
+    }
+
+    .domain-heading {
+        font-size: 14px;
+        font-weight: 700;
+        color: #263248;
+        margin-bottom: 12px;
+    }
+
+    .domain-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .domain-button {
+        padding: 11px 18px;
+        background: #ffffff;
+        border: 1px solid #dfe3ea;
+        border-radius: 13px;
+        color: #4b5563;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .domain-button:hover {
+        animation: buttonBlink 0.85s ease-in-out infinite;
+        border-color: #667eea;
+    }
+
+    .domain-button.selected {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-color: transparent;
+        color: #ffffff;
+        cursor: default;
+        box-shadow: 0 6px 16px rgba(102, 126, 234, 0.22);
+    }
+
+    .domain-button.selected:hover {
+        animation: none;
+    }
+
+    /* =========================
+       COURSE SECTION
+       ========================= */
+
+    .course-container {
+        margin-top: 22px;
+        margin-bottom: 25px;
+    }
+
+    .course-heading {
+        font-size: 17px;
+        font-weight: 700;
+        color: #172033;
+        margin-bottom: 14px;
+    }
+
+    .course-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    /* =========================
+       COURSE CARD
+       ========================= */
+
+    .course-card {
+        background: #ffffff;
+        border: 1px solid #e1e5eb;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 5px 16px rgba(31, 41, 55, 0.05);
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    .course-card:hover {
+        transform: translateY(-3px);
+        border-color: #667eea;
+        box-shadow: 0 10px 24px rgba(102, 126, 234, 0.13);
+    }
+
+    .course-card-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: #172033;
+        margin-bottom: 7px;
+    }
+
+    .course-card-domain {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 12px;
+        background: #f0f2ff;
+        color: #667eea;
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .course-card-description {
+        color: #53657d;
+        font-size: 13px;
+        line-height: 1.55;
+        min-height: 82px;
+        margin-bottom: 16px;
+    }
+
+    /* =========================
+       COURSE META
+       ========================= */
+
+    .course-card-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding-top: 12px;
+        margin-bottom: 16px;
+        border-top: 1px solid #edf0f4;
+    }
+
+    .course-meta-box {
+        background: #f8f9fc;
+        border: 1px solid #edf0f4;
+        border-radius: 10px;
+        padding: 9px 10px;
+    }
+
+    .course-meta-label {
+        display: block;
+        color: #8a94a6;
+        font-size: 10px;
+        font-weight: 600;
+        margin-bottom: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    .course-meta-value {
+        display: block;
+        color: #364152;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    /* =========================
+       VIEW DETAILS BUTTON
+       ========================= */
+
+    .course-details-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 10px 16px;
+        border-radius: 12px;
+        background: #ffffff;
+        border: 1px solid #dbe2ea;
+        color: #53657d;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .course-details-button:hover {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-color: transparent;
         color: #ffffff;
     }
 
+    /* =========================
+       NO COURSE
+       ========================= */
 
-    /* =========================================
+    .course-info {
+        background: #ffffff;
+        border: 1px solid #e4e7ee;
+        border-radius: 15px;
+        padding: 18px;
+        color: #687386;
+        font-size: 13px;
+    }
+
+    /* =========================
        BLINK ANIMATION
-    ========================================= */
+       ========================= */
 
     @keyframes buttonBlink {
 
         0% {
-
             opacity: 1;
-
-            box-shadow:
-                0 0 0
-                rgba(102, 126, 234, 0);
+            box-shadow: 0 0 0 rgba(102, 126, 234, 0);
         }
 
         50% {
-
             opacity: 0.60;
-
-            box-shadow:
-                0 0 0 6px
-                rgba(102, 126, 234, 0.10);
+            box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.10);
         }
 
         100% {
-
             opacity: 1;
-
-            box-shadow:
-                0 0 0
-                rgba(102, 126, 234, 0);
+            box-shadow: 0 0 0 rgba(102, 126, 234, 0);
         }
+
     }
 
-
-    /* =========================================
-       DOMAIN CONTAINER
-    ========================================= */
-
-    .domain-container {
-
-        position: relative;
-
-        z-index: 1;
-
-        margin-top: 4px;
-
-        margin-bottom: 30px;
-    }
-
-
-    .domain-heading {
-
-        margin-bottom: 12px;
-
-        font-size: 17px;
-
-        font-weight: 600;
-
-        color: #172033;
-    }
-
-
-    .domain-buttons {
-
-        display: flex;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-
-        gap: 10px;
-    }
-
-
-    /* =========================================
-       DOMAIN + COURSE BUTTON
-    ========================================= */
-
-    .domain-button,
-    .course-button {
-
-        padding: 11px 22px;
-
-        border: 1px solid #dbe2ea;
-
-        border-radius: 25px;
-
-        background: #ffffff;
-
-        color: #53657d;
-
-        font-size: 14px;
-
-        font-weight: 700;
-
-        cursor: pointer;
-
-        white-space: nowrap;
-
-        transition:
-            background 0.2s ease,
-            color 0.2s ease,
-            border 0.2s ease,
-            box-shadow 0.2s ease;
-    }
-
-
-    /* =========================================
-       DOMAIN HOVER BLINK
-    ========================================= */
-
-    .domain-button:hover {
-
-        animation:
-            buttonBlink
-            0.85s
-            ease-in-out
-            infinite;
-
-        border-color: #667eea;
-    }
-
-
-    /* =========================================
-       COURSE HOVER BLINK
-    ========================================= */
-
-    .course-button:hover {
-
-        animation:
-            buttonBlink
-            0.85s
-            ease-in-out
-            infinite;
-
-        border-color: #667eea;
-    }
-
-
-    /* =========================================
-       SELECTED
-    ========================================= */
-
-    .domain-button.selected,
-    .course-button.selected {
-
-        background:
-            linear-gradient(
-                135deg,
-                #667eea,
-                #764ba2
-            );
-
-        border-color: transparent;
-
-        color: #ffffff;
-
-        cursor: default;
-
-        box-shadow:
-            0 6px 16px
-            rgba(102, 126, 234, 0.22);
-    }
-
-
-    .domain-button.selected:hover,
-    .course-button.selected:hover {
-
-        animation: none;
-
-        background:
-            linear-gradient(
-                135deg,
-                #667eea,
-                #764ba2
-            );
-
-        color: #ffffff;
-    }
-
-
-    /* =========================================
-       COURSE CONTAINER
-    ========================================= */
-
-    .course-container {
-
-        position: relative;
-
-        z-index: 1;
-
-        margin-top: 8px;
-
-        margin-bottom: 30px;
-    }
-
-
-    .course-heading {
-
-        margin-bottom: 12px;
-
-        font-size: 17px;
-
-        font-weight: 600;
-
-        color: #172033;
-    }
-
-
-    .course-buttons {
-
-        display: flex;
-
-        flex-wrap: wrap;
-
-        align-items: center;
-
-        gap: 10px;
-    }
-
-
-    /* =========================================
-       COURSE INFORMATION
-    ========================================= */
-
-    .course-info {
-
-        position: relative;
-
-        z-index: 1;
-
-        max-width: 680px;
-
-        margin-top: 12px;
-
-        margin-bottom: 24px;
-
-        padding: 20px 22px;
-
-        border-radius: 16px;
-
-        background: #ffffff;
-
-        border: 1px solid #dfe5ee;
-
-        box-shadow:
-            0 5px 15px
-            rgba(31, 41, 55, 0.05);
-
-        color: #3c4a60;
-
-        font-size: 14px;
-
-        line-height: 1.65;
-    }
-
-
-    .course-info-title {
-
-        margin-bottom: 8px;
-
-        font-size: 17px;
-
-        font-weight: 700;
-
-        color: #29466d;
-    }
-
-
-    /* =========================================
-       CALL MESSAGE
-    ========================================= */
-
-    .call-message {
-
-        position: relative;
-
-        z-index: 1;
-
-        max-width: 650px;
-
-        padding: 18px 20px;
-
-        margin-bottom: 20px;
-
-        border-radius: 15px;
-
-        background: #ffffff;
-
-        border: 1px solid #e1e5eb;
-
-        color: #53657d;
-    }
-
-
-    /* =========================================
+    /* =========================
        RESPONSIVE
-    ========================================= */
+       ========================= */
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
+
+        .chat-wrapper {
+            height: calc(100vh - 125px);
+        }
+
+        .course-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+    @media (max-width: 600px) {
 
         .company-logo-section {
-
-            height: 60px;
+            height: 70px;
         }
-
 
         .assistant-main {
-
-            padding: 12px;
+            padding: 10px;
         }
-
 
         .chat-wrapper {
-
-            border-radius: 16px;
+            height: calc(100vh - 90px);
+            min-height: 500px;
+            border-radius: 18px;
         }
-
-
-        .chat-header {
-
-            height: 82px;
-
-            padding: 0 18px;
-        }
-
-
-        .ai-avatar {
-
-            width: 48px;
-            height: 48px;
-
-            margin-right: 12px;
-
-            font-size: 19px;
-        }
-
-
-        .header-title {
-
-            font-size: 18px;
-        }
-
-
-        .online-status {
-
-            font-size: 12px;
-        }
-
-
-        .call-button {
-
-            width: 40px;
-            height: 40px;
-        }
-
 
         .chat-area {
-
-            padding: 22px 18px;
+            padding: 17px;
         }
-
 
         .message {
-
-            max-width: 100%;
-
-            padding: 18px;
-
-            font-size: 15px;
+            max-width: 90%;
         }
-
-
-        .domain-buttons,
-        .course-buttons {
-
-            gap: 8px;
-        }
-
-
-        .domain-button,
-        .course-button {
-
-            padding: 10px 17px;
-
-            font-size: 13px;
-        }
-    }
-
-
-    @media (max-width: 480px) {
-
-        .assistant-main {
-
-            padding: 0;
-        }
-
-
-        .chat-wrapper {
-
-            width: 100%;
-
-            height: 100%;
-
-            max-height: none;
-
-            border-radius: 0;
-
-            border-left: none;
-
-            border-right: none;
-        }
-
 
         .chat-header {
-
-            padding: 0 15px;
+            padding: 12px 14px;
         }
 
-
-        .chat-area {
-
-            padding: 18px 14px;
+        .course-card {
+            padding: 17px;
         }
 
-
-        .message {
-
-            padding: 16px;
-        }
-
-
-        .domain-button,
-        .course-button {
-
-            padding: 9px 15px;
-        }
     }
 
 </style>
@@ -927,61 +551,51 @@
 
 <div class="assistant-page">
 
-
-    <!-- =========================================
-         COMPANY LOGO
-    ========================================== -->
+    <!-- COMPANY LOGO -->
 
     <div class="company-logo-section">
     </div>
 
 
-    <!-- =========================================
-         MAIN
-    ========================================== -->
+    <!-- MAIN ASSISTANT -->
 
     <div class="assistant-main">
 
         <div class="chat-wrapper">
 
-
-            <!-- =====================================
-                 HEADER
-            ====================================== -->
+            <!-- CHAT HEADER -->
 
             <div class="chat-header">
 
-                <div class="ai-avatar">
-                    AI
-                </div>
+                <div class="header-left">
 
-
-                <div class="header-info">
-
-                    <div class="header-title">
-                        AI Learning Assistant
+                    <div class="ai-avatar">
+                        AI
                     </div>
 
+                    <div class="header-info">
 
-                    <div class="online-status">
+                        <div class="header-title">
+                            AI Learning Assistant
+                        </div>
 
-                        <span class="online-dot">
-                        </span>
+                        <div class="online-status">
 
-                        <span>
+                            <span class="online-dot"></span>
+
                             Online
-                        </span>
+
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <button
-                    type="button"
-                    class="call-button"
-                    onclick="makeCall()"
-                    title="Call Assistance">
+                <button type="button"
+                        class="call-button"
+                        onclick="makeCall()"
+                        title="Voice Assistance">
 
                     ☎
 
@@ -990,49 +604,15 @@
             </div>
 
 
-            <!-- =====================================
-                 CHAT AREA
-            ====================================== -->
+            <!-- CHAT AREA -->
 
-            <div
-                id="chatArea"
-                class="chat-area">
+            <div id="chatArea"
+                 class="chat-area">
 
-
-                <!-- INITIAL MESSAGE -->
-
-                <div class="message-row bot">
-
-                    <div class="message bot">
-
-                        <div class="bot-title">
-                            AI Learning Assistant
-                        </div>
-
-
-                        Hi! 👋
-
-                        <br />
-
-                        Do you know about the available courses?
-
-
-                        <br />
-
-
-                        <button
-                            type="button"
-                            class="available-domain-button"
-                            onclick="showAvailableDomains()">
-
-                            Available Domains
-
-                        </button>
-
-                    </div>
+                <div id="chatContent"
+                     class="chat-content">
 
                 </div>
-
 
             </div>
 
@@ -1045,139 +625,315 @@
 
 <script>
 
-    /* =========================================
-       DOMAIN DATA
-    ========================================== */
+    /* ==========================================
+       CHAT VARIABLES
+       ========================================== */
 
-    var domainData = {
+    var chatArea = document.getElementById("chatArea");
+    var chatContent = document.getElementById("chatContent");
+
+
+    /* ==========================================
+       IT COURSE DATA
+       ========================================== */
+
+    var domainCourses = {
 
         "IT": [
-            "Python",
-            "Java",
-            "Data Analytics",
-            "Software Development"
-        ],
 
-        "IT Infrastructure": [
-            "Networking",
-            "Cloud Computing",
-            "Cyber Security",
-            "System Administration"
-        ],
+            {
+                name: "Full Stack Web Development",
+                domain: "IT",
+                description:
+                    "Advanced full-stack web development program covering frontend, backend, databases, asynchronous JavaScript, Django frameworks, API integration and deployment.",
+                duration: "6 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=web-development-advanced&category=it"
+            },
 
-        "Circuit": [
-            "Digital Electronics",
-            "Embedded Systems",
-            "VLSI",
-            "Microcontrollers"
-        ],
+            {
+                name: "Android Application Development",
+                domain: "IT",
+                description:
+                    "Advanced Android development course covering application components, UI design, threading, data storage, device features and real-time applications.",
+                duration: "4 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=android-advanced&category=it"
+            },
 
-        "Mechanical": [
-            "CAD",
-            "CNC",
-            "Robotics",
-            "Manufacturing"
-        ],
+            {
+                name: "Diploma in Computer Application",
+                domain: "IT",
+                description:
+                    "An end-to-end DCA program that covers computer fundamentals, MS Office suite, internet productivity, digital safety and introductory programming to make students workplace-ready.",
+                duration: "3 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=Diploma%20in%20Computer%20Application%20-Advanced&category=it"
+            },
 
-        "Civil": [
-            "AutoCAD Civil",
-            "Structural Engineering",
-            "Quantity Surveying",
-            "Construction Management"
+            {
+                name: "Artificial Intelligence with Machine Learning",
+                domain: "IT",
+                description:
+                    "A focused advanced AI & ML program teaching classical AI algorithms, machine learning pipelines, deep learning, and deployment-ready systems.",
+                duration: "6 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=Artificial%20Intelligence%20with%20Machine%20Learning%20-%20Advanced&category=it"
+            },
+
+            {
+                name: "C++ Programming",
+                domain: "IT",
+                description:
+                    "An industry-ready advanced C++ program covering modern C++ features, templates, concurrency, networking, tooling, and high-performance system design.",
+                duration: "3 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=cpp-programming-Advanced&category=it"
+            },
+
+            {
+                name: "Java Programming",
+                domain: "IT",
+                description:
+                    "Comprehensive advanced Java program covering JVM internals, concurrency, streams, performance, testing and production practices for building scalable Java applications.",
+                duration: "3 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=Java%20Programming-Advanced&category=it"
+            },
+
+            {
+                name: "C Programming",
+                domain: "IT",
+                description:
+                    "An advanced systems-level C course that covers memory optimization, toolchains, build automation, advanced debugging, and systems programming practices for production-quality C software.",
+                duration: "2.5 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=c-programming-Advanced&category=it"
+            },
+
+            {
+                name: "Python Programming",
+                domain: "IT",
+                description:
+                    "An advanced, production-oriented Python program covering concurrency, data engineering basics, web & GUI, testing, packaging and deployment for real projects.",
+                duration: "4 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=python-programming-Advanced&category=it"
+            },
+
+            {
+                name: "PHP",
+                domain: "IT",
+                description:
+                    "Advanced PHP course covering OOP, exception handling, advanced database operations, AJAX, and MVC concepts.",
+                duration: "3 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=php-advanced&category=it"
+            },
+
+            {
+                name: "Power BI",
+                domain: "IT",
+                description:
+                    "A production-ready Power BI program covering ETL, data modelling, DAX, advanced visualization, Power BI service and real-world dashboard deployment.",
+                duration: "2.5 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=Power%20BI-Advanced&category=it"
+            },
+
+            {
+                name: "J2EE",
+                domain: "IT",
+                description:
+                    "Advanced J2EE course covering Servlets, JSP, JDBC, MVC architecture, EJB, Web Services and enterprise Java technologies.",
+                duration: "4 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=j2ee-advanced&category=it"
+            },
+
+            {
+                name: "DOTNET",
+                domain: "IT",
+                description:
+                    "Advanced .NET course covering C#, Windows applications, ASP.NET web applications, ADO.NET, web services and enterprise development.",
+                duration: "3 Months",
+                level: "Advanced",
+                link:
+                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=dotnet-advanced&category=it"
+            }
+
         ]
 
     };
 
 
-    /* =========================================
-       CHAT AREA
-    ========================================== */
+    /* ==========================================
+       INITIAL BOT MESSAGE
+       ========================================== */
 
-    var chatArea =
-        document.getElementById("chatArea");
+    window.onload = function () {
+
+        addBotMessage(
+            "Hi! 👋 Do you know about the available courses?"
+        );
+
+        showAvailableDomains();
+
+    };
 
 
-    /* =========================================
-       AVAILABLE DOMAINS
-    ========================================== */
+    /* ==========================================
+       ADD BOT MESSAGE
+       ========================================== */
+
+    function addBotMessage(message) {
+
+        var row = document.createElement("div");
+
+        row.className = "message-row bot-row";
+
+
+        var messageBox = document.createElement("div");
+
+        messageBox.className = "message bot";
+
+
+        messageBox.innerHTML =
+
+            "<div class='bot-title'>AI Assistant</div>" +
+
+            "<div>" + message + "</div>";
+
+
+        row.appendChild(messageBox);
+
+        chatContent.appendChild(row);
+
+        scrollToBottom();
+
+    }
+
+
+    /* ==========================================
+       ADD USER MESSAGE
+       ========================================== */
+
+    function addUserMessage(message) {
+
+        var row = document.createElement("div");
+
+        row.className = "message-row user-row";
+
+
+        var messageBox = document.createElement("div");
+
+        messageBox.className = "message user";
+
+        messageBox.textContent = message;
+
+
+        row.appendChild(messageBox);
+
+        chatContent.appendChild(row);
+
+        scrollToBottom();
+
+    }
+
+
+    /* ==========================================
+       AVAILABLE DOMAINS BUTTON
+       ========================================== */
 
     function showAvailableDomains() {
 
-        var availableButton =
-            document.querySelector(
-                ".available-domain-button"
+        var row = document.createElement("div");
+
+        row.className = "message-row bot-row";
+
+
+        var messageBox = document.createElement("div");
+
+        messageBox.className = "message bot";
+
+
+        var button = document.createElement("button");
+
+        button.type = "button";
+
+        button.className = "available-domain-button";
+
+        button.textContent = "Available Domains";
+
+
+        button.onclick = function () {
+
+            if (button.classList.contains("selected")) {
+                return;
+            }
+
+
+            button.classList.add("selected");
+
+            button.disabled = true;
+
+
+            addBotMessage(
+                "Sure! 😊 Please select a domain to explore the available courses."
             );
 
 
-        if (
-            availableButton.classList.contains(
-                "selected"
-            )
-        ) {
+            showDomains();
 
-            return;
-        }
+        };
 
 
-        /* Purple + lock */
+        messageBox.appendChild(button);
 
-        availableButton.classList.add(
-            "selected"
-        );
+        row.appendChild(messageBox);
 
-        availableButton.disabled = true;
+        chatContent.appendChild(row);
 
+        scrollToBottom();
 
-        /* Bot reply */
-
-        addBotMessage(
-            "Sure! 😊<br>" +
-            "Please select the domain you are interested in."
-        );
+    }
 
 
-        /* Container */
+    /* ==========================================
+       SHOW DOMAINS
+       ========================================== */
 
-        var container =
-            document.createElement(
-                "div"
-            );
+    function showDomains() {
 
-        container.className =
-            "domain-container";
+        var container = document.createElement("div");
 
-
-        /* Heading */
-
-        var heading =
-            document.createElement(
-                "div"
-            );
-
-        heading.className =
-            "domain-heading";
-
-        heading.textContent =
-            "Available Domains";
+        container.className = "domain-container";
 
 
-        container.appendChild(
-            heading
-        );
+        var heading = document.createElement("div");
+
+        heading.className = "domain-heading";
+
+        heading.textContent = "Available Domains";
+
+        container.appendChild(heading);
 
 
-        /* Button container */
+        var buttonsContainer = document.createElement("div");
 
-        var buttons =
-            document.createElement(
-                "div"
-            );
+        buttonsContainer.className = "domain-buttons";
 
-        buttons.className =
-            "domain-buttons";
-
-
-        /* Domains */
 
         var domains = [
 
@@ -1190,482 +946,304 @@
         ];
 
 
-        for (
-            var i = 0;
-            i < domains.length;
-            i++
-        ) {
+        for (var i = 0; i < domains.length; i++) {
 
-            var button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.type =
-                "button";
-
-
-            button.className =
-                "domain-button";
-
-
-            button.textContent =
-                domains[i];
-
-
-            button.setAttribute(
-                "data-domain",
-                domains[i]
+            createDomainButton(
+                domains[i],
+                buttonsContainer
             );
 
-
-            button.onclick =
-                function () {
-
-
-                    if (
-                        this.classList.contains(
-                            "selected"
-                        )
-                    ) {
-
-                        return;
-                    }
-
-
-                    /* Purple */
-
-                    this.classList.add(
-                        "selected"
-                    );
-
-
-                    /* Lock */
-
-                    this.disabled =
-                        true;
-
-
-                    var selectedDomain =
-                        this.getAttribute(
-                            "data-domain"
-                        );
-
-
-                    selectDomain(
-                        selectedDomain
-                    );
-
-                };
-
-
-            buttons.appendChild(
-                button
-            );
         }
 
 
-        container.appendChild(
-            buttons
-        );
+        container.appendChild(buttonsContainer);
 
-
-        chatArea.appendChild(
-            container
-        );
-
+        chatContent.appendChild(container);
 
         scrollToBottom();
 
     }
 
 
-    /* =========================================
-       SELECT DOMAIN
-    ========================================== */
+    /* ==========================================
+       CREATE DOMAIN BUTTON
+       ========================================== */
 
-    function selectDomain(
-        domainName
+    function createDomainButton(
+        domainName,
+        buttonsContainer
     ) {
 
-        addBotMessage(
+        var button = document.createElement("button");
 
-            "<b>" +
-            escapeHtml(domainName) +
-            "</b> selected. 👍<br><br>" +
+        button.type = "button";
 
-            "Which course would you like to know about?"
+        button.className = "domain-button";
 
-        );
+        button.textContent = domainName;
 
 
-        showCourses(
-            domainName
-        );
+        button.onclick = function () {
 
-    }
-
-
-    /* =========================================
-       SHOW COURSES
-    ========================================== */
-
-    function showCourses(
-        domainName
-    ) {
-
-        var container =
-            document.createElement(
-                "div"
-            );
-
-
-        container.className =
-            "course-container";
-
-
-        var heading =
-            document.createElement(
-                "div"
-            );
-
-
-        heading.className =
-            "course-heading";
-
-
-        heading.textContent =
-            "Available Courses";
-
-
-        container.appendChild(
-            heading
-        );
-
-
-        var buttons =
-            document.createElement(
-                "div"
-            );
-
-
-        buttons.className =
-            "course-buttons";
-
-
-        var courses =
-            domainData[domainName];
-
-
-        if (
-            courses &&
-            courses.length > 0
-        ) {
-
-            for (
-                var i = 0;
-                i < courses.length;
-                i++
-            ) {
-
-                var button =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                button.type =
-                    "button";
-
-
-                button.className =
-                    "course-button";
-
-
-                button.textContent =
-                    courses[i];
-
-
-                button.setAttribute(
-                    "data-course",
-                    courses[i]
-                );
-
-
-                button.setAttribute(
-                    "data-domain",
-                    domainName
-                );
-
-
-                button.onclick =
-                    function () {
-
-
-                        if (
-                            this.classList.contains(
-                                "selected"
-                            )
-                        ) {
-
-                            return;
-                        }
-
-
-                        /* Purple */
-
-                        this.classList.add(
-                            "selected"
-                        );
-
-
-                        /* Lock */
-
-                        this.disabled =
-                            true;
-
-
-                        var selectedCourse =
-                            this.getAttribute(
-                                "data-course"
-                            );
-
-
-                        var selectedDomain =
-                            this.getAttribute(
-                                "data-domain"
-                            );
-
-
-                        showCourseInformation(
-
-                            selectedCourse,
-                            selectedDomain
-
-                        );
-
-                    };
-
-
-                buttons.appendChild(
-                    button
-                );
+            if (button.classList.contains("selected")) {
+                return;
             }
 
+
+            /*
+             * Selected domain becomes purple
+             */
+
+            button.classList.add("selected");
+
+            button.disabled = true;
+
+
+            /*
+             * Add bot response
+             */
+
+            addBotMessage(
+
+                "Great choice! 😊 Here are the available courses under <b>" +
+
+                escapeHtml(domainName) +
+
+                "</b>."
+
+            );
+
+
+            /*
+             * Display courses
+             */
+
+            showCourses(domainName);
+
+        };
+
+
+        buttonsContainer.appendChild(button);
+
+    }
+
+
+    /* ==========================================
+       SHOW COURSES
+       ========================================== */
+
+    function showCourses(domainName) {
+
+        var container = document.createElement("div");
+
+        container.className = "course-container";
+
+
+        var heading = document.createElement("div");
+
+        heading.className = "course-heading";
+
+        heading.textContent =
+            domainName + " Courses";
+
+
+        container.appendChild(heading);
+
+
+        var courses = domainCourses[domainName];
+
+
+        /*
+         * If courses are not added yet
+         */
+
+        if (!courses || courses.length === 0) {
+
+            var noCourse = document.createElement("div");
+
+            noCourse.className = "course-info";
+
+            noCourse.textContent =
+                "Courses for this domain will be available soon.";
+
+            container.appendChild(noCourse);
+
+            chatContent.appendChild(container);
+
+            scrollToBottom();
+
+            return;
+
         }
 
 
-        container.appendChild(
-            buttons
-        );
+        /*
+         * Course grid
+         */
+
+        var courseGrid = document.createElement("div");
+
+        courseGrid.className = "course-grid";
 
 
-        chatArea.appendChild(
-            container
-        );
+        /*
+         * Create each course card
+         */
+
+        for (var i = 0; i < courses.length; i++) {
+
+            var course = courses[i];
 
 
-        scrollToBottom();
+            var card = document.createElement("div");
 
-    }
-
-
-    /* =========================================
-       COURSE INFORMATION
-    ========================================== */
-
-    function showCourseInformation(
-        courseName,
-        domainName
-    ) {
-
-        addBotMessage(
-
-            "<b>" +
-            escapeHtml(courseName) +
-            "</b> is available under the " +
-
-            "<b>" +
-            escapeHtml(domainName) +
-            "</b> domain. 😊"
-
-        );
+            card.className = "course-card";
 
 
-        var info =
-            document.createElement(
-                "div"
-            );
+            card.innerHTML =
+
+                "<div class='course-card-title'>" +
+
+                    escapeHtml(course.name) +
+
+                "</div>" +
 
 
-        info.className =
-            "course-info";
+                "<div class='course-card-domain'>" +
+
+                    escapeHtml(course.domain) +
+
+                "</div>" +
 
 
-        info.innerHTML =
+                "<div class='course-card-description'>" +
 
-            "<div class='course-info-title'>" +
+                    escapeHtml(course.description) +
 
-            escapeHtml(courseName) +
-
-            "</div>" +
-
-            "This course helps learners build " +
-
-            "practical knowledge and skills related " +
-
-            "to " +
-
-            escapeHtml(courseName) +
-
-            ". You can explore the course " +
-
-            "details and learning opportunities " +
-
-            "through the AI Learning Assistant.";
+                "</div>" +
 
 
-        chatArea.appendChild(
-            info
-        );
+                "<div class='course-card-meta'>" +
+
+                    "<div class='course-meta-box'>" +
+
+                        "<span class='course-meta-label'>" +
+
+                            "Duration" +
+
+                        "</span>" +
+
+                        "<span class='course-meta-value'>" +
+
+                            "⏱ " +
+
+                            escapeHtml(course.duration) +
+
+                        "</span>" +
+
+                    "</div>" +
 
 
-        scrollToBottom();
+                    "<div class='course-meta-box'>" +
 
-    }
+                        "<span class='course-meta-label'>" +
 
+                            "Level" +
 
-    /* =========================================
-       ADD BOT MESSAGE
-    ========================================== */
+                        "</span>" +
 
-    function addBotMessage(
-        text
-    ) {
+                        "<span class='course-meta-value'>" +
 
-        var row =
-            document.createElement(
-                "div"
-            );
+                            "📊 " +
 
+                            escapeHtml(course.level) +
 
-        row.className =
-            "message-row bot";
+                        "</span>" +
+
+                    "</div>" +
+
+                "</div>" +
 
 
-        var message =
-            document.createElement(
-                "div"
-            );
+                "<a class='course-details-button' " +
+
+                    "href='" +
+
+                    course.link +
+
+                    "' " +
+
+                    "target='_blank' " +
+
+                    "rel='noopener noreferrer'>" +
+
+                    "View Details" +
+
+                "</a>";
 
 
-        message.className =
-            "message bot";
+            courseGrid.appendChild(card);
+
+        }
 
 
-        message.innerHTML =
-            text;
+        container.appendChild(courseGrid);
 
-
-        row.appendChild(
-            message
-        );
-
-
-        chatArea.appendChild(
-            row
-        );
-
+        chatContent.appendChild(container);
 
         scrollToBottom();
 
     }
 
 
-    /* =========================================
-       CALL
-    ========================================== */
+    /* ==========================================
+       ESCAPE HTML
+       ========================================== */
+
+    function escapeHtml(value) {
+
+        return String(value)
+
+            .replace(/&/g, "&amp;")
+
+            .replace(/</g, "&lt;")
+
+            .replace(/>/g, "&gt;")
+
+            .replace(/"/g, "&quot;")
+
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* ==========================================
+       SCROLL TO BOTTOM
+       ========================================== */
+
+    function scrollToBottom() {
+
+        setTimeout(function () {
+
+            chatArea.scrollTop =
+                chatArea.scrollHeight;
+
+        }, 50);
+
+    }
+
+
+    /* ==========================================
+       CALL BUTTON
+       ========================================== */
 
     function makeCall() {
 
         addBotMessage(
-
-            "📞 Call assistance is available. " +
-            "Our support team can help you " +
-            "with your learning enquiry."
-
+            "Voice assistance is currently available as a visual option. 😊"
         );
 
     }
-
-
-    /* =========================================
-       ESCAPE HTML
-    ========================================== */
-
-    function escapeHtml(
-        value
-    ) {
-
-        return String(value)
-
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-
-            .replace(
-                /</g,
-                "&lt;"
-            )
-
-            .replace(
-                />/g,
-                "&gt;"
-            )
-
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-    }
-
-
-    /* =========================================
-       SCROLL
-    ========================================== */
-
-    function scrollToBottom() {
-
-        setTimeout(
-            function () {
-
-                chatArea.scrollTop =
-                    chatArea.scrollHeight;
-
-            },
-            50
-        );
-
-    }
-
-
-    /* =========================================
-       PAGE LOAD
-    ========================================== */
-
-    window.onload =
-        function () {
-
-            scrollToBottom();
-
-        };
 
 </script>
 
