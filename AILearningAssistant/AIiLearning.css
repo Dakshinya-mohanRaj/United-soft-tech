@@ -1,0 +1,524 @@
+﻿/* ========================================= AI LEARNING ASSISTANT GLOBAL RESET ========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #eef3ff;
+    color: #333;
+}
+/* ========================================= MAIN APP ========================================= */
+
+.ai-app {
+    width: 100%;
+    max-width: 1100px;
+    margin: 30px auto;
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(50, 70, 120, 0.15);
+}
+/* ========================================= TOP HEADER ========================================= */
+
+.ai-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 30px;
+    background: linear-gradient( 135deg, #4f6edb, #7189e8 );
+    color: white;
+}
+
+.ai-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.ai-logo {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 15px;
+    font-size: 27px;
+}
+
+.ai-brand h1 {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.ai-brand span {
+    display: block;
+    margin-top: 3px;
+    font-size: 13px;
+    opacity: 0.88;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    background: #57e38a;
+    border-radius: 50%;
+}
+/* ========================================= CHAT AREA ========================================= */
+
+.ai-chat {
+    min-height: 600px;
+    padding: 35px;
+    background: #f5f7ff;
+}
+/* ========================================= BOT MESSAGE ========================================= */
+
+.message {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e3e9ff;
+    border-radius: 50%;
+    font-size: 22px;
+}
+
+.message-content {
+    max-width: 650px;
+}
+
+.message-name {
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
+
+.message-card {
+    padding: 18px 22px;
+    background: #ffffff;
+    border-radius: 5px 18px 18px 18px;
+    box-shadow: 0 4px 15px rgba(50, 70, 120, 0.08);
+}
+
+    .message-card p {
+        margin: 4px 0;
+        color: #333;
+    }
+/* ========================================= SECTION TITLE ========================================= */
+
+.selection-section h3, .hidden-section h3 {
+    margin-bottom: 18px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #30364d;
+}
+/* ========================================= DOMAIN CARDS ========================================= */
+
+.domain-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+}
+
+.option-card {
+    padding: 20px 12px;
+    background: #ffffff;
+    border: 1px solid #e1e5f2;
+    border-radius: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.25s ease;
+}
+
+    .option-card:hover {
+        transform: translateY(-4px);
+        border-color: #5d76d6;
+        box-shadow: 0 8px 20px rgba(79, 110, 219, 0.16);
+    }
+
+.option-icon {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.option-title {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #30364d;
+}
+
+.option-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 11px;
+    color: #888;
+}
+/* ========================================= COURSE CARDS ========================================= */
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.course-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid #e1e5f2;
+    border-radius: 15px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.25s ease;
+}
+
+    .course-card:hover {
+        transform: translateY(-3px);
+        border-color: #5d76d6;
+        box-shadow: 0 7px 18px rgba(79, 110, 219, 0.12);
+    }
+
+.course-icon {
+    font-size: 28px;
+}
+
+.course-card strong {
+    display: block;
+    color: #30364d;
+}
+
+.course-card small {
+    display: block;
+    margin-top: 4px;
+    color: #888;
+}
+/* ========================================= LEVEL CARDS ========================================= */
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.level-card {
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e1e5f2;
+    border-radius: 15px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.25s ease;
+}
+
+    .level-card:hover {
+        transform: translateY(-3px);
+        border-color: #5d76d6;
+        box-shadow: 0 7px 18px rgba(79, 110, 219, 0.12);
+    }
+
+    .level-card strong {
+        display: block;
+        margin-bottom: 6px;
+        color: #30364d;
+    }
+
+    .level-card span {
+        color: #888;
+        font-size: 13px;
+    }
+/* ========================================= COURSE INFORMATION ========================================= */
+
+.course-info {
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(50, 70, 120, 0.08);
+}
+
+.course-info-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.large-course-icon {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e6ebff;
+    border-radius: 16px;
+    font-size: 30px;
+}
+
+.course-info h2 {
+    margin: 0 0 5px;
+    color: #30364d;
+}
+
+.course-info-header p {
+    margin: 0;
+    color: #777;
+}
+/* ========================================= COURSE DETAILS ========================================= */
+
+.course-details {
+    display: flex;
+    gap: 20px;
+    margin: 25px 0;
+}
+
+    .course-details div {
+        padding: 15px 25px;
+        background: #f0f3ff;
+        border-radius: 12px;
+    }
+
+    .course-details span, .course-details strong {
+        display: block;
+    }
+
+    .course-details span {
+        font-size: 12px;
+        color: #888;
+    }
+
+    .course-details strong {
+        margin-top: 5px;
+        color: #444;
+    }
+/* ========================================= COURSE OPTIONS ========================================= */
+
+.course-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+    .course-options button {
+        padding: 13px;
+        background: #ffffff;
+        border: 1px solid #e1e5f2;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #444;
+        transition: all 0.2s ease;
+    }
+
+        .course-options button:hover {
+            background: #eef2ff;
+            border-color: #5d76d6;
+        }
+/* ========================================= CAMERA PANEL ========================================= */
+
+.camera-panel {
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(50, 70, 120, 0.08);
+}
+
+.camera-tabs {
+    display: flex;
+    border-bottom: 1px solid #eeeeee;
+}
+
+    .camera-tabs button {
+        flex: 1;
+        padding: 14px;
+        background: #ffffff;
+        border: none;
+        cursor: pointer;
+        color: #555;
+    }
+
+    .camera-tabs .active-tab {
+        color: #4f6edb;
+        border-bottom: 2px solid #4f6edb;
+    }
+
+.camera-preview {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #eef1f8;
+    color: #777;
+}
+
+.camera-icon {
+    margin-bottom: 10px;
+    font-size: 55px;
+}
+
+.camera-preview p {
+    margin: 5px;
+    font-weight: 600;
+}
+/* ========================================= FALLBACK MESSAGE ========================================= */
+
+.fallback-message {
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(50, 70, 120, 0.06);
+}
+
+.fallback-icon {
+    font-size: 45px;
+}
+
+.fallback-message h3 {
+    margin: 10px 0;
+}
+
+.fallback-message p {
+    color: #777;
+}
+/* ========================================= CHAT INPUT ========================================= */
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+    padding: 18px 25px;
+    background: #ffffff;
+    border-top: 1px solid #e6e6e6;
+}
+
+    .chat-input input {
+        flex: 1;
+        padding: 13px 16px;
+        background: #ffffff;
+        border: 1px solid #dcdfea;
+        border-radius: 12px;
+        outline: none;
+        font-size: 14px;
+    }
+
+        .chat-input input:focus {
+            border-color: #5d76d6;
+            box-shadow: 0 0 0 3px rgba(93, 118, 214, 0.10);
+        }
+
+.camera-button, .send-button {
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.camera-button {
+    background: #eef1f7;
+}
+
+.send-button {
+    background: #4f6edb;
+    color: white;
+    font-size: 18px;
+    transition: 0.2s;
+}
+
+    .send-button:hover {
+        background: #405fc9;
+    }
+/* ========================================= HIDDEN SECTIONS ========================================= */
+
+.hidden-section {
+    display: none;
+}
+/* ========================================= RESPONSIVE - TABLET ========================================= */
+
+@media (max-width: 800px) {
+    .ai-app {
+        margin: 10px;
+        border-radius: 18px;
+    }
+
+    .ai-chat {
+        padding: 20px;
+    }
+
+    .domain-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .level-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-options {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-topbar {
+        padding: 18px;
+    }
+
+    .ai-brand h1 {
+        font-size: 18px;
+    }
+}
+/* ========================================= RESPONSIVE - MOBILE ========================================= */
+
+@media (max-width: 500px) {
+    .ai-app {
+        margin: 5px;
+        border-radius: 15px;
+    }
+
+    .ai-chat {
+        padding: 15px;
+    }
+
+    .domain-grid, .course-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .status {
+        display: none;
+    }
+
+    .chat-input {
+        padding: 12px;
+    }
+
+    .course-info-header {
+        align-items: flex-start;
+    }
+
+    .course-details {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
