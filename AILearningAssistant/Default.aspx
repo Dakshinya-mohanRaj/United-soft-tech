@@ -146,6 +146,7 @@
         background: linear-gradient(135deg, #667eea, #764ba2);
         color: #ffffff;
         transform: scale(1.05);
+        animation: buttonBlink 0.85s ease-in-out infinite;
     }
 
     /* =========================
@@ -458,6 +459,7 @@
         background: linear-gradient(135deg, #667eea, #764ba2);
         border-color: transparent;
         color: #ffffff;
+        animation: buttonBlink 0.85s ease-in-out infinite;
     }
 
     /* =========================
@@ -474,6 +476,147 @@
     }
 
     /* =========================
+       LEVEL SELECTION
+       ========================= */
+
+    .level-panel {
+        max-width: 520px;
+        margin: 18px auto;
+        padding: 22px;
+        background: #ffffff;
+        border: 1px solid #e4e7ee;
+        border-radius: 16px;
+        text-align: center;
+    }
+
+    .level-panel-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #172033;
+        margin-bottom: 16px;
+    }
+
+    .level-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .level-button {
+        padding: 11px 22px;
+        background: #ffffff;
+        border: 1px solid #dfe3ea;
+        border-radius: 13px;
+        color: #4b5563;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .level-button:hover {
+        animation: buttonBlink 0.85s ease-in-out infinite;
+        border-color: #667eea;
+    }
+
+    /* =========================
+       IT COURSE LIST
+       ========================= */
+
+    .it-course-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .it-course-button {
+        max-width: 100%;
+        padding: 11px 18px;
+        background: #ffffff;
+        border: 1px solid #dfe3ea;
+        border-radius: 13px;
+        color: #4b5563;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.35;
+        text-align: left;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .it-course-button:hover {
+        animation: buttonBlink 0.85s ease-in-out infinite;
+        border-color: #667eea;
+    }
+
+    /* =========================
+       COURSE DETAILS
+       ========================= */
+
+    .course-detail-box {
+        max-width: 620px;
+        margin-top: 18px;
+        padding: 18px;
+        background: #ffffff;
+        border: 1px solid #e4e7ee;
+        border-radius: 15px;
+    }
+
+    .course-detail-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #172033;
+        margin-bottom: 12px;
+    }
+
+    .course-detail-list {
+        margin: 0 0 16px;
+        padding: 0;
+        list-style: none;
+    }
+
+    .course-detail-list li {
+        font-size: 13.5px;
+        line-height: 1.55;
+        color: #53657d;
+        margin-bottom: 6px;
+    }
+
+    .course-detail-list li strong {
+        color: #364152;
+    }
+
+    .it-back-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        background: #ffffff;
+        border: 1px solid #dbe2ea;
+        border-radius: 12px;
+        color: #53657d;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .it-back-button:hover {
+        animation: buttonBlink 0.85s ease-in-out infinite;
+        border-color: #667eea;
+    }
+
+    .detail-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    /* =========================
        BLINK ANIMATION
        ========================= */
 
@@ -481,17 +624,14 @@
 
         0% {
             opacity: 1;
-            box-shadow: 0 0 0 rgba(102, 126, 234, 0);
         }
 
         50% {
             opacity: 0.60;
-            box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.10);
         }
 
         100% {
             opacity: 1;
-            box-shadow: 0 0 0 rgba(102, 126, 234, 0);
         }
 
     }
@@ -634,146 +774,289 @@
 
 
     /* ==========================================
-       IT COURSE DATA
+       COURSE DATA (DOMAIN -> LEVEL -> COURSES)
        ========================================== */
 
-    var domainCourses = {
+    var LEVELS = ["Beginner", "Moderate", "Advanced"];
 
-        "IT": [
+    var courseData = {
 
-            {
-                name: "Full Stack Web Development",
-                domain: "IT",
-                description:
-                    "Advanced full-stack web development program covering frontend, backend, databases, asynchronous JavaScript, Django frameworks, API integration and deployment.",
-                duration: "6 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=web-development-advanced&category=it"
-            },
+        "IT": {
 
-            {
-                name: "Android Application Development",
-                domain: "IT",
-                description:
-                    "Advanced Android development course covering application components, UI design, threading, data storage, device features and real-time applications.",
-                duration: "4 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=android-advanced&category=it"
-            },
+            "Beginner": [
 
-            {
-                name: "Diploma in Computer Application",
-                domain: "IT",
-                description:
-                    "An end-to-end DCA program that covers computer fundamentals, MS Office suite, internet productivity, digital safety and introductory programming to make students workplace-ready.",
-                duration: "3 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=Diploma%20in%20Computer%20Application%20-Advanced&category=it"
-            },
+                {
+                    name: "Cyber Security with Ethical Hacking",
+                    domain: "IT",
+                    level: "Beginner",
+                    duration: "2 Months",
+                    description:
+                        "An introductory cybersecurity course that gives learners basic awareness of threats, safe computing, network fundamentals and an introduction to ethical hacking concepts.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=cyber-security-Beginner&category=it"
+                },
 
-            {
-                name: "Artificial Intelligence with Machine Learning",
-                domain: "IT",
-                description:
-                    "A focused advanced AI & ML program teaching classical AI algorithms, machine learning pipelines, deep learning, and deployment-ready systems.",
-                duration: "6 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=Artificial%20Intelligence%20with%20Machine%20Learning%20-%20Advanced&category=it"
-            },
+                {
+                    name: "C++ Programming",
+                    domain: "IT",
+                    level: "Beginner",
+                    duration: "1 Month",
+                    description:
+                        "Introductory C++ course covering program structure, basic syntax, primitive types, control flow, simple functions and standard strings to start building object-oriented skills.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=cpp-programming-beginner&category=it"
+                },
 
-            {
-                name: "C++ Programming",
-                domain: "IT",
-                description:
-                    "An industry-ready advanced C++ program covering modern C++ features, templates, concurrency, networking, tooling, and high-performance system design.",
-                duration: "3 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=cpp-programming-Advanced&category=it"
-            },
+                {
+                    name: "Java Programming",
+                    domain: "IT",
+                    level: "Beginner",
+                    duration: "1 Month",
+                    description:
+                        "Beginner Java course introducing syntax, basic object-oriented ideas, arrays, methods and simple console applications to start real-world Java development.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=java-Programming-Beginner&category=it"
+                },
 
-            {
-                name: "Java Programming",
-                domain: "IT",
-                description:
-                    "Comprehensive advanced Java program covering JVM internals, concurrency, streams, performance, testing and production practices for building scalable Java applications.",
-                duration: "3 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=Java%20Programming-Advanced&category=it"
-            },
+                {
+                    name: "C Programming",
+                    domain: "IT",
+                    level: "Beginner",
+                    duration: "1 Month",
+                    description:
+                        "A practical introduction to C covering program structure, data types, control flow, functions, arrays and basic input/output so learners can write working command-line programs.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=c-programming-Beginner&category=it"
+                },
 
-            {
-                name: "C Programming",
-                domain: "IT",
-                description:
-                    "An advanced systems-level C course that covers memory optimization, toolchains, build automation, advanced debugging, and systems programming practices for production-quality C software.",
-                duration: "2.5 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=c-programming-Advanced&category=it"
-            },
+                {
+                    name: "Python Programming",
+                    domain: "IT",
+                    level: "Beginner",
+                    duration: "2 Months",
+                    description:
+                        "A beginner-friendly Python course teaching syntax, basic data types, lists, dictionaries and simple file operations to build small command-line applications.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=python-programming-Beginner&category=it"
+                }
 
-            {
-                name: "Python Programming",
-                domain: "IT",
-                description:
-                    "An advanced, production-oriented Python program covering concurrency, data engineering basics, web & GUI, testing, packaging and deployment for real projects.",
-                duration: "4 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=python-programming-Advanced&category=it"
-            },
+            ],
 
-            {
-                name: "PHP",
-                domain: "IT",
-                description:
-                    "Advanced PHP course covering OOP, exception handling, advanced database operations, AJAX, and MVC concepts.",
-                duration: "3 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=php-advanced&category=it"
-            },
+            "Moderate": [
 
-            {
-                name: "Power BI",
-                domain: "IT",
-                description:
-                    "A production-ready Power BI program covering ETL, data modelling, DAX, advanced visualization, Power BI service and real-world dashboard deployment.",
-                duration: "2.5 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=Power%20BI-Advanced&category=it"
-            },
+                {
+                    name: "Cyber Security with Ethical Hacking",
+                    domain: "IT",
+                    level: "Intermediate",
+                    duration: "3 Months",
+                    description:
+                        "A hands-on intermediate ethical hacking course covering footprinting, scanning, phishing, network analysis and web server basics for real-world security testing.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=cyber-security-Intermediate&category=it"
+                },
 
-            {
-                name: "J2EE",
-                domain: "IT",
-                description:
-                    "Advanced J2EE course covering Servlets, JSP, JDBC, MVC architecture, EJB, Web Services and enterprise Java technologies.",
-                duration: "4 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=j2ee-advanced&category=it"
-            },
+                {
+                    name: "C++ Programming",
+                    domain: "IT",
+                    level: "Intermediate",
+                    duration: "2 Months",
+                    description:
+                        "A focused C++ intermediate course that teaches object-oriented programming, templates, the Standard Template Library and file & exception handling for robust applications.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=cpp-programming-Intermediate&category=it"
+                },
 
-            {
-                name: "DOTNET",
-                domain: "IT",
-                description:
-                    "Advanced .NET course covering C#, Windows applications, ASP.NET web applications, ADO.NET, web services and enterprise development.",
-                duration: "3 Months",
-                level: "Advanced",
-                link:
-                    "https://unitedsofttech.co.in/CourseDetails.aspx?id=dotnet-advanced&category=it"
-            }
+                {
+                    name: "Java Programming",
+                    domain: "IT",
+                    level: "Intermediate",
+                    duration: "2 Months",
+                    description:
+                        "Intermediate Java prepares learners to build modular, object-oriented applications using collections, file I/O, exceptions and basic data structures.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=Java%20Programming-Intermediate&category=it"
+                },
 
-        ]
+                {
+                    name: "C Programming",
+                    domain: "IT",
+                    level: "Intermediate",
+                    duration: "1.5 Months",
+                    description:
+                        "Intermediate C course focused on pointers, dynamic memory allocation, modular programming and core data-structure implementations to build more capable and efficient console applications.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=c-programming-Intermediate&category=it"
+                },
+
+                {
+                    name: "Python Programming",
+                    domain: "IT",
+                    level: "Intermediate",
+                    duration: "2 Months",
+                    description:
+                        "Intermediate Python covers OOP, modules, generators, decorators, file & binary handling, and testing to build maintainable Python packages and utilities.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=Python%20Programming%20-%20Intermediate&category=it"
+                },
+
+                {
+                    name: "PHP",
+                    domain: "IT",
+                    level: "Intermediate",
+                    duration: "2 Months",
+                    description:
+                        "Intermediate PHP course focusing on core PHP programming, form handling, file management, sessions, and database connectivity.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=php-intermediate&category=it"
+                }
+
+            ],
+
+            "Advanced": [
+
+                {
+                    name: "Full Stack Web Development",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "6 Months",
+                    description:
+                        "Advanced full-stack web development program covering frontend, backend, databases, asynchronous JavaScript, Django frameworks, API integration and deployment.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=web-development-advanced&category=it"
+                },
+
+                {
+                    name: "Android Application Development",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "Advanced Android development course covering application components, UI design, threading, data storage, device features and real-time applications.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=android-advanced&category=it"
+                },
+
+                {
+                    name: "Diploma in Computer Application",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "An end-to-end DCA program that covers computer fundamentals, MS Office suite, internet productivity, digital safety and introductory programming to make students workplace-ready.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=Diploma%20in%20Computer%20Application%20-Advanced&category=it"
+                },
+
+                {
+                    name: "Artificial Intelligence with Machine Learning",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "6 Months",
+                    description:
+                        "A focused advanced AI & ML program teaching classical AI algorithms, machine learning pipelines, deep learning, and deployment-ready systems.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=Artificial%20Intelligence%20with%20Machine%20Learning%20-%20Advanced&category=it"
+                },
+
+                {
+                    name: "C++ Programming",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "An industry-ready advanced C++ program covering modern C++ features, templates, concurrency, networking, tooling, and high-performance system design.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=cpp-programming-Advanced&category=it"
+                },
+
+                {
+                    name: "Java Programming",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Comprehensive advanced Java program covering JVM internals, concurrency, streams, performance, testing and production practices for building scalable Java applications.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=Java%20Programming-Advanced&category=it"
+                },
+
+                {
+                    name: "C Programming",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "2.5 Months",
+                    description:
+                        "An advanced systems-level C course that covers memory optimization, toolchains, build automation, advanced debugging, and systems programming practices for production-quality C software.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=c-programming-Advanced&category=it"
+                },
+
+                {
+                    name: "Python Programming",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "An advanced, production-oriented Python program covering concurrency, data engineering basics, web & GUI, testing, packaging and deployment for real projects.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=python-programming-Advanced&category=it"
+                },
+
+                {
+                    name: "PHP",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Advanced PHP course covering OOP, exception handling, advanced database operations, AJAX, and MVC concepts.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=php-advanced&category=it"
+                },
+
+                {
+                    name: "Power BI",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "2.5 Months",
+                    description:
+                        "A production-ready Power BI program covering ETL, data modelling, DAX, advanced visualization, Power BI service and real-world dashboard deployment.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=Power%20BI-Advanced&category=it"
+                },
+
+                {
+                    name: "J2EE",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "Advanced J2EE course covering Servlets, JSP, JDBC, MVC architecture, EJB, Web Services and enterprise Java technologies.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=j2ee-advanced&category=it"
+                },
+
+                {
+                    name: "DOTNET",
+                    domain: "IT",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Advanced .NET course covering C#, Windows applications, ASP.NET web applications, ADO.NET, web services and enterprise development.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=dotnet-advanced&category=it"
+                }
+
+            ]
+
+        },
+
+        "IT Infrastructure": {},
+
+        "Circuit": {},
+
+        "Mechanical": {},
+
+        "Civil": {}
 
     };
 
@@ -1005,7 +1288,7 @@
 
             addBotMessage(
 
-                "Great choice! 😊 Here are the available courses under <b>" +
+                "Great choice! 😊 Please select your learning level for <b>" +
 
                 escapeHtml(domainName) +
 
@@ -1015,10 +1298,10 @@
 
 
             /*
-             * Display courses
+             * Display level selection
              */
 
-            showCourses(domainName);
+            showLevelPanel(domainName);
 
         };
 
@@ -1029,10 +1312,149 @@
 
 
     /* ==========================================
-       SHOW COURSES
+       SHOW LEVEL PANEL
        ========================================== */
 
-    function showCourses(domainName) {
+    function showLevelPanel(domainName) {
+
+        var panel = document.createElement("div");
+
+        panel.className = "level-panel";
+
+
+        var title = document.createElement("div");
+
+        title.className = "level-panel-title";
+
+        title.textContent = "Select Your Learning Level";
+
+        panel.appendChild(title);
+
+
+        var buttonRow = document.createElement("div");
+
+        buttonRow.className = "level-buttons";
+
+
+        for (var i = 0; i < LEVELS.length; i++) {
+
+            createLevelButton(
+                domainName,
+                LEVELS[i],
+                buttonRow
+            );
+
+        }
+
+
+        panel.appendChild(buttonRow);
+
+        chatContent.appendChild(panel);
+
+        scrollToBottom();
+
+    }
+
+
+    /* ==========================================
+       CREATE LEVEL BUTTON
+       ========================================== */
+
+    function createLevelButton(
+        domainName,
+        level,
+        buttonRow
+    ) {
+
+        var button = document.createElement("button");
+
+        button.type = "button";
+
+        button.className = "level-button";
+
+        button.textContent = level;
+
+
+        button.onclick = function () {
+
+            if (button.classList.contains("selected")) {
+                return;
+            }
+
+
+            button.classList.add("selected");
+
+            button.disabled = true;
+
+
+            addBotMessage(
+
+                "Showing <b>" +
+
+                escapeHtml(level) +
+
+                "</b> courses in <b>" +
+
+                escapeHtml(domainName) +
+
+                "</b>."
+
+            );
+
+
+            showLevelCourses(domainName, level);
+
+        };
+
+
+        buttonRow.appendChild(button);
+
+    }
+
+
+    /* ==========================================
+       SHOW COURSES FOR A LEVEL
+       ========================================== */
+
+    function showLevelCourses(domainName, level) {
+
+        var domainCourses = courseData[domainName];
+
+
+        /*
+         * If the domain has no courses at all
+         */
+
+        if (!hasAnyCourse(domainCourses)) {
+
+            showNotice(
+                "Courses for " +
+                domainName +
+                " will be available soon."
+            );
+
+            return;
+
+        }
+
+
+        var courses = domainCourses[level];
+
+
+        /*
+         * If this level has no courses
+         */
+
+        if (!courses || courses.length === 0) {
+
+            showNotice(
+                "No courses are currently available for this level. Please choose another level."
+            );
+
+            return;
+
+        }
+
 
         var container = document.createElement("div");
 
@@ -1044,132 +1466,174 @@
         heading.className = "course-heading";
 
         heading.textContent =
-            domainName + " Courses";
+            level + " Level \u2013 Available Courses";
 
 
         container.appendChild(heading);
 
 
-        var courses = domainCourses[domainName];
+        var list = document.createElement("div");
+
+        list.className = "it-course-list";
 
 
-        /*
-         * If courses are not added yet
-         */
+        for (var i = 0; i < courses.length; i++) {
 
-        if (!courses || courses.length === 0) {
-
-            var noCourse = document.createElement("div");
-
-            noCourse.className = "course-info";
-
-            noCourse.textContent =
-                "Courses for this domain will be available soon.";
-
-            container.appendChild(noCourse);
-
-            chatContent.appendChild(container);
-
-            scrollToBottom();
-
-            return;
+            createCourseButton(
+                courses[i],
+                domainName,
+                level,
+                list
+            );
 
         }
 
 
-        /*
-         * Course grid
-         */
+        container.appendChild(list);
 
-        var courseGrid = document.createElement("div");
+        chatContent.appendChild(container);
 
-        courseGrid.className = "course-grid";
+        scrollToBottom();
 
-
-        /*
-         * Create each course card
-         */
-
-        for (var i = 0; i < courses.length; i++) {
-
-            var course = courses[i];
+    }
 
 
-            var card = document.createElement("div");
+    /* ==========================================
+       SHOW NOTICE
+       ========================================== */
 
-            card.className = "course-card";
+    function showNotice(message) {
+
+        var notice = document.createElement("div");
+
+        notice.className = "course-info";
+
+        notice.textContent = message;
+
+        chatContent.appendChild(notice);
+
+        scrollToBottom();
+
+    }
 
 
-            card.innerHTML =
+    /* ==========================================
+       HAS ANY COURSE
+       ========================================== */
 
-                "<div class='course-card-title'>" +
+    function hasAnyCourse(domainCourses) {
 
-                    escapeHtml(course.name) +
+        if (!domainCourses) {
+            return false;
+        }
 
-                "</div>" +
+
+        for (var i = 0; i < LEVELS.length; i++) {
+
+            var list = domainCourses[LEVELS[i]];
+
+            if (list && list.length > 0) {
+                return true;
+            }
+
+        }
 
 
-                "<div class='course-card-domain'>" +
+        return false;
+
+    }
+
+
+    /* ==========================================
+       CREATE COURSE BUTTON
+       ========================================== */
+
+    function createCourseButton(
+        course,
+        domainName,
+        level,
+        list
+    ) {
+
+        var button = document.createElement("button");
+
+        button.type = "button";
+
+        button.className = "it-course-button";
+
+        button.textContent = course.name;
+
+
+        button.onclick = function () {
+
+            showCourseDetails(
+                course,
+                domainName,
+                level
+            );
+
+        };
+
+
+        list.appendChild(button);
+
+    }
+
+
+    /* ==========================================
+       SHOW COURSE DETAILS
+       ========================================== */
+
+    function showCourseDetails(course, domainName, level) {
+
+        var detail = document.createElement("div");
+
+        detail.className = "course-detail-box";
+
+
+        detail.innerHTML =
+
+            "<div class='course-detail-title'>" +
+
+                escapeHtml(course.name) +
+
+            "</div>" +
+
+            "<ul class='course-detail-list'>" +
+
+                "<li><strong>Domain:</strong> " +
 
                     escapeHtml(course.domain) +
 
-                "</div>" +
+                "</li>" +
 
+                "<li><strong>Duration:</strong> " +
 
-                "<div class='course-card-description'>" +
+                    escapeHtml(course.duration) +
+
+                "</li>" +
+
+                "<li><strong>Level:</strong> " +
+
+                    escapeHtml(course.level) +
+
+                "</li>" +
+
+                "<li><strong>Description:</strong> " +
 
                     escapeHtml(course.description) +
 
-                "</div>" +
+                "</li>" +
 
+            "</ul>" +
 
-                "<div class='course-card-meta'>" +
-
-                    "<div class='course-meta-box'>" +
-
-                        "<span class='course-meta-label'>" +
-
-                            "Duration" +
-
-                        "</span>" +
-
-                        "<span class='course-meta-value'>" +
-
-                            "⏱ " +
-
-                            escapeHtml(course.duration) +
-
-                        "</span>" +
-
-                    "</div>" +
-
-
-                    "<div class='course-meta-box'>" +
-
-                        "<span class='course-meta-label'>" +
-
-                            "Level" +
-
-                        "</span>" +
-
-                        "<span class='course-meta-value'>" +
-
-                            "📊 " +
-
-                            escapeHtml(course.level) +
-
-                        "</span>" +
-
-                    "</div>" +
-
-                "</div>" +
-
+            "<div class='detail-actions'>" +
 
                 "<a class='course-details-button' " +
 
                     "href='" +
 
-                    course.link +
+                    course.url +
 
                     "' " +
 
@@ -1179,17 +1643,46 @@
 
                     "View Details" +
 
-                "</a>";
+                "</a>" +
+
+                "<button type='button' class='it-back-button'>" +
+
+                    "Back to Courses" +
+
+                "</button>" +
+
+                "<button type='button' class='it-back-button'>" +
+
+                    "Change Level" +
+
+                "</button>" +
+
+            "</div>";
 
 
-            courseGrid.appendChild(card);
+        var actionButtons =
+            detail.querySelectorAll(".it-back-button");
+
+
+        if (actionButtons.length === 2) {
+
+            actionButtons[0].onclick = function () {
+
+                showLevelCourses(domainName, level);
+
+            };
+
+
+            actionButtons[1].onclick = function () {
+
+                showLevelPanel(domainName);
+
+            };
 
         }
 
 
-        container.appendChild(courseGrid);
-
-        chatContent.appendChild(container);
+        chatContent.appendChild(detail);
 
         scrollToBottom();
 

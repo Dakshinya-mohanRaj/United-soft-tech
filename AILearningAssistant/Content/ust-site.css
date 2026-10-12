@@ -415,6 +415,21 @@ body.ust-body--assistant {
     background: #112a66;
     box-shadow: 0 6px 16px rgba(23, 53, 127, 0.24);
     color: #ffffff;
+    animation: buttonBlink 0.85s ease-in-out infinite;
+}
+
+@keyframes buttonBlink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.60;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 
