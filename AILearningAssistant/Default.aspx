@@ -143,10 +143,7 @@
     }
 
     .call-button:hover {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: #ffffff;
         transform: scale(1.05);
-        animation: buttonBlink 0.85s ease-in-out infinite;
     }
 
     /* =========================
@@ -260,12 +257,15 @@
         transition: all 0.2s ease;
     }
 
-    .available-domain-button:hover {
-        animation: buttonBlink 0.85s ease-in-out infinite;
-        border-color: #667eea;
-    }
+    /* =========================
+       SELECTED BUTTON STATE
+       ========================= */
 
-    .available-domain-button.selected {
+    .available-domain-button.selected,
+    .domain-button.selected,
+    .level-button.selected,
+    .it-course-button.selected,
+    .it-back-button.selected {
         background: linear-gradient(135deg, #667eea, #764ba2);
         border-color: transparent;
         color: #ffffff;
@@ -273,7 +273,11 @@
         box-shadow: 0 6px 16px rgba(102, 126, 234, 0.22);
     }
 
-    .available-domain-button.selected:hover {
+    .available-domain-button.selected:hover,
+    .domain-button.selected:hover,
+    .level-button.selected:hover,
+    .it-course-button.selected:hover,
+    .it-back-button.selected:hover {
         animation: none;
     }
 
@@ -309,23 +313,6 @@
         font-weight: 700;
         cursor: pointer;
         transition: all 0.2s ease;
-    }
-
-    .domain-button:hover {
-        animation: buttonBlink 0.85s ease-in-out infinite;
-        border-color: #667eea;
-    }
-
-    .domain-button.selected {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-color: transparent;
-        color: #ffffff;
-        cursor: default;
-        box-shadow: 0 6px 16px rgba(102, 126, 234, 0.22);
-    }
-
-    .domain-button.selected:hover {
-        animation: none;
     }
 
     /* =========================
@@ -455,13 +442,6 @@
         transition: all 0.2s ease;
     }
 
-    .course-details-button:hover {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-color: transparent;
-        color: #ffffff;
-        animation: buttonBlink 0.85s ease-in-out infinite;
-    }
-
     /* =========================
        NO COURSE
        ========================= */
@@ -515,11 +495,6 @@
         transition: all 0.2s ease;
     }
 
-    .level-button:hover {
-        animation: buttonBlink 0.85s ease-in-out infinite;
-        border-color: #667eea;
-    }
-
     /* =========================
        IT COURSE LIST
        ========================= */
@@ -545,11 +520,6 @@
         overflow-wrap: anywhere;
         cursor: pointer;
         transition: all 0.2s ease;
-    }
-
-    .it-course-button:hover {
-        animation: buttonBlink 0.85s ease-in-out infinite;
-        border-color: #667eea;
     }
 
     /* =========================
@@ -604,11 +574,6 @@
         transition: all 0.2s ease;
     }
 
-    .it-back-button:hover {
-        animation: buttonBlink 0.85s ease-in-out infinite;
-        border-color: #667eea;
-    }
-
     .detail-actions {
         display: flex;
         flex-wrap: wrap;
@@ -617,21 +582,73 @@
     }
 
     /* =========================
-       BLINK ANIMATION
+       GLOBAL BUTTON INTERACTION
+       INNER BACKGROUND GLOW
        ========================= */
 
-    @keyframes buttonBlink {
+    .available-domain-button,
+    .domain-button,
+    .level-button,
+    .it-course-button,
+    .it-back-button,
+    .course-details-button,
+    .call-button {
+        position: relative;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .available-domain-button::before,
+    .domain-button::before,
+    .level-button::before,
+    .it-course-button::before,
+    .it-back-button::before,
+    .course-details-button::before,
+    .call-button::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        opacity: 0;
+        pointer-events: none;
+        background: radial-gradient(
+            circle at 50% 50%,
+            rgba(102, 126, 234, 0.38),
+            rgba(102, 126, 234, 0) 70%
+        );
+        transition: opacity 0.25s ease;
+    }
+
+    .available-domain-button:hover::before,
+    .domain-button:hover::before,
+    .level-button:hover::before,
+    .it-course-button:hover::before,
+    .it-back-button:hover::before,
+    .course-details-button:hover::before,
+    .call-button:hover::before {
+        animation: buttonGlow 1.6s ease-in-out infinite;
+    }
+
+    .available-domain-button.selected:hover::before,
+    .domain-button.selected:hover::before,
+    .level-button.selected:hover::before,
+    .it-course-button.selected:hover::before,
+    .it-back-button.selected:hover::before {
+        animation: none;
+    }
+
+    @keyframes buttonGlow {
 
         0% {
-            opacity: 1;
+            opacity: 0;
         }
 
         50% {
-            opacity: 0.60;
+            opacity: 1;
         }
 
         100% {
-            opacity: 1;
+            opacity: 0;
         }
 
     }
@@ -771,6 +788,14 @@
 
     var chatArea = document.getElementById("chatArea");
     var chatContent = document.getElementById("chatContent");
+
+
+    /* ==========================================
+       LAST RENDERED NAVIGATION TARGETS
+       ========================================== */
+
+    var lastLevelPanel = null;
+    var lastCourseContainer = null;
 
 
     /* ==========================================
@@ -1050,7 +1075,72 @@
 
         },
 
-        "IT Infrastructure": {},
+        "IT Infrastructure": {
+
+            "Beginner": [],
+
+            "Moderate": [],
+
+            "Advanced": [
+
+                {
+                    name: "Adobe Photoshop",
+                    domain: "IT Infrastructure",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Advanced Adobe Photoshop course focused on professional image editing, creative design, photo retouching, and real-world visual projects.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=adobe-photoshop&category=it-infrastructure"
+                },
+
+                {
+                    name: "RHCE \u2013 Red Hat Certified Engineer",
+                    domain: "IT Infrastructure",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "Advanced Linux system administration course based on Red Hat technologies, focusing on server management, security, automation, and enterprise deployment.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=rhce&category=it-infrastructure"
+                },
+
+                {
+                    name: "NS-2 \u2013 Network Security",
+                    domain: "IT Infrastructure",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Advanced network security course covering cyber threats, firewall technologies, secure communication, and enterprise security practices.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=ns2-network-security&category=it-infrastructure"
+                },
+
+                {
+                    name: "MCSE \u2013 Microsoft Certified System Engineer",
+                    domain: "IT Infrastructure",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "Advanced Windows Server administration course covering Active Directory, networking services, security, virtualization, and enterprise server management.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=mcse&category=it-infrastructure"
+                },
+
+                {
+                    name: "Hardware & Networking",
+                    domain: "IT Infrastructure",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "Comprehensive hardware and networking course covering computer assembly, operating systems, networking fundamentals, security, and real-world troubleshooting.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=hardware-networking&category=it-infrastructure"
+                }
+
+            ]
+
+        },
 
         "Circuit": {},
 
@@ -1167,9 +1257,7 @@
             }
 
 
-            button.classList.add("selected");
-
-            button.disabled = true;
+            markSelected(button);
 
 
             addBotMessage(
@@ -1249,6 +1337,32 @@
 
 
     /* ==========================================
+       MARK SELECTED BUTTON (SINGLE GROUP)
+       ========================================== */
+
+    function markSelected(button) {
+
+        var parent = button.parentNode;
+
+        if (parent) {
+
+            var selectedButtons =
+                parent.getElementsByClassName("selected");
+
+            for (var i = selectedButtons.length - 1; i >= 0; i--) {
+
+                selectedButtons[i].classList.remove("selected");
+
+            }
+
+        }
+
+        button.classList.add("selected");
+
+    }
+
+
+    /* ==========================================
        CREATE DOMAIN BUTTON
        ========================================== */
 
@@ -1274,12 +1388,10 @@
 
 
             /*
-             * Selected domain becomes purple
+             * Selected domain stays highlighted
              */
 
-            button.classList.add("selected");
-
-            button.disabled = true;
+            markSelected(button);
 
 
             /*
@@ -1317,9 +1429,33 @@
 
     function showLevelPanel(domainName) {
 
+        /*
+         * Reuse an existing level panel for the same domain
+         * so level options are never duplicated.
+         */
+
+        var existingPanel =
+            chatContent.querySelector(
+                ".level-panel[data-domain='" + domainName + "']"
+            );
+
+        if (existingPanel) {
+
+            existingPanel.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+            return;
+
+        }
+
+
         var panel = document.createElement("div");
 
         panel.className = "level-panel";
+
+        panel.setAttribute("data-domain", domainName);
 
 
         var title = document.createElement("div");
@@ -1350,6 +1486,8 @@
         panel.appendChild(buttonRow);
 
         chatContent.appendChild(panel);
+
+        lastLevelPanel = panel;
 
         scrollToBottom();
 
@@ -1382,9 +1520,7 @@
             }
 
 
-            button.classList.add("selected");
-
-            button.disabled = true;
+            markSelected(button);
 
 
             addBotMessage(
@@ -1418,6 +1554,26 @@
 
     function showLevelCourses(domainName, level) {
 
+        /*
+         * Reuse an existing section for the same domain + level
+         * so course lists are never duplicated.
+         */
+
+        var existingSection =
+            findSection(domainName, level);
+
+        if (existingSection) {
+
+            existingSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+            return;
+
+        }
+
+
         var domainCourses = courseData[domainName];
 
 
@@ -1430,7 +1586,9 @@
             showNotice(
                 "Courses for " +
                 domainName +
-                " will be available soon."
+                " will be available soon.",
+                domainName,
+                level
             );
 
             return;
@@ -1448,7 +1606,13 @@
         if (!courses || courses.length === 0) {
 
             showNotice(
-                "No courses are currently available for this level. Please choose another level."
+                "No courses are currently available for " +
+                level +
+                " level in " +
+                domainName +
+                ".",
+                domainName,
+                level
             );
 
             return;
@@ -1459,6 +1623,10 @@
         var container = document.createElement("div");
 
         container.className = "course-container";
+
+        container.setAttribute("data-domain", domainName);
+
+        container.setAttribute("data-level", level);
 
 
         var heading = document.createElement("div");
@@ -1493,6 +1661,8 @@
 
         chatContent.appendChild(container);
 
+        lastCourseContainer = container;
+
         scrollToBottom();
 
     }
@@ -1502,7 +1672,7 @@
        SHOW NOTICE
        ========================================== */
 
-    function showNotice(message) {
+    function showNotice(message, domainName, level) {
 
         var notice = document.createElement("div");
 
@@ -1510,9 +1680,46 @@
 
         notice.textContent = message;
 
+        if (domainName) {
+            notice.setAttribute("data-domain", domainName);
+        }
+
+        if (level) {
+            notice.setAttribute("data-level", level);
+        }
+
         chatContent.appendChild(notice);
 
         scrollToBottom();
+
+    }
+
+
+    /* ==========================================
+       FIND EXISTING SECTION
+       ========================================== */
+
+    function findSection(domainName, level) {
+
+        var sections =
+            chatContent.querySelectorAll(
+                ".course-container, .course-info"
+            );
+
+        for (var i = 0; i < sections.length; i++) {
+
+            if (
+                sections[i].getAttribute("data-domain") === domainName &&
+                sections[i].getAttribute("data-level") === level
+            ) {
+
+                return sections[i];
+
+            }
+
+        }
+
+        return null;
 
     }
 
@@ -1565,6 +1772,14 @@
 
 
         button.onclick = function () {
+
+            if (button.classList.contains("selected")) {
+                return;
+            }
+
+
+            markSelected(button);
+
 
             showCourseDetails(
                 course,
@@ -1668,14 +1883,39 @@
 
             actionButtons[0].onclick = function () {
 
-                showLevelCourses(domainName, level);
+                if (
+                    lastCourseContainer &&
+                    lastCourseContainer.parentNode
+                ) {
+
+                    lastCourseContainer.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                } else {
+
+                    showLevelCourses(domainName, level);
+
+                }
 
             };
 
 
             actionButtons[1].onclick = function () {
 
-                showLevelPanel(domainName);
+                if (lastLevelPanel && lastLevelPanel.parentNode) {
+
+                    lastLevelPanel.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                } else {
+
+                    showLevelPanel(domainName);
+
+                }
 
             };
 
