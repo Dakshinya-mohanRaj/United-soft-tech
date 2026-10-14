@@ -1357,7 +1357,62 @@
 
         },
 
-        "Civil": {}
+        "Civil": {
+
+            notice:
+                "No courses available for this level in Civil. Please select Advanced to explore available courses.",
+
+            "Beginner": [],
+
+            "Moderate": [],
+
+            "Advanced": [
+
+                {
+                    name: "SketchUp \u2013 3D Modeling & Rendering",
+                    domain: "Civil",
+                    level: "Advanced",
+                    duration: "2 Months",
+                    description:
+                        "Professional SketchUp course covering 3D modeling, interior and architectural design, layouts, rendering, and V-Ray workflow.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=sketchup-design&category=civil"
+                },
+
+                {
+                    name: "STAAD.Pro",
+                    domain: "Civil",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Professional STAAD.Pro course covering structural analysis and design of beams, trusses, buildings, tanks, and advanced load conditions.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=staad-pro&category=civil"
+                },
+
+                {
+                    name: "Revit Architecture",
+                    domain: "Civil",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Professional Revit Architecture course covering BIM concepts, architectural modeling, documentation, massing, and site design.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=revit-architecture&category=civil"
+                },
+
+                {
+                    name: "AutoCAD Civil",
+                    domain: "Civil",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Professional AutoCAD Civil course covering 2D drafting, 3D modeling, layout preparation, rendering, and construction drawings."
+                }
+
+            ]
+
+        }
 
     };
 
@@ -1816,12 +1871,16 @@
 
         if (!courses || courses.length === 0) {
 
+            var noCourseMessage =
+                domainCourses.notice ||
+                ("No courses are currently available for " +
+                    level +
+                    " level in " +
+                    domainName +
+                    ".");
+
             showNotice(
-                "No courses are currently available for " +
-                level +
-                " level in " +
-                domainName +
-                ".",
+                noCourseMessage,
                 domainName,
                 level
             );
