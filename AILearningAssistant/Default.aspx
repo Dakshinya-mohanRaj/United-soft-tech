@@ -1255,7 +1255,107 @@
 
         },
 
-        "Mechanical": {},
+        "Mechanical": {
+
+            "Beginner": [
+
+                {
+                    name: "ANSYS",
+                    domain: "MECHANICAL",
+                    level: "Beginner",
+                    duration: "2 Months",
+                    description:
+                        "Beginner-level ANSYS course covering fundamentals of structural, thermal and CFD analysis using APDL and Workbench.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=ansys-basics&category=mechanical"
+                },
+
+                {
+                    name: "SOLIDWORKS",
+                    domain: "MECHANICAL",
+                    level: "Beginner",
+                    duration: "2 Months",
+                    description:
+                        "Beginner SOLIDWORKS course covering sketching, basic part modeling, assemblies, sheet metal and drafting.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=solidworks-basic&category=mechanical"
+                }
+
+            ],
+
+            "Moderate": [
+
+                {
+                    name: "SOLIDWORKS",
+                    domain: "MECHANICAL",
+                    level: "Intermediate",
+                    duration: "3 Months",
+                    description:
+                        "Intermediate SOLIDWORKS course covering solid modeling, assemblies, surface modeling, sheet metal, drafting and basic simulation.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=solidworks-intermediate&category=mechanical"
+                }
+
+            ],
+
+            "Advanced": [
+
+                {
+                    name: "ANSYS",
+                    domain: "MECHANICAL",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Advanced ANSYS course covering structural, thermal, CFD, dynamic analysis and Workbench with real-world engineering applications.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=ansys-advanced&category=mechanical"
+                },
+
+                {
+                    name: "CATIA",
+                    domain: "MECHANICAL",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "Advanced CATIA course covering complex part modeling, assemblies, surface design, sheet metal and industrial applications.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=catia-advanced&category=mechanical"
+                },
+
+                {
+                    name: "CREO Parametric",
+                    domain: "MECHANICAL",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "Advanced CREO Parametric course covering complex part modeling, surface design, sheet metal, assemblies, mechanisms and drafting.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=creo-parametric-advanced&category=mechanical"
+                },
+
+                {
+                    name: "NX CAD",
+                    domain: "MECHANICAL",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Advanced NX CAD course covering parametric modeling, synchronous modeling, surface design, sheet metal, assemblies and drafting.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=nx-cad-advanced&category=mechanical"
+                },
+
+                {
+                    name: "SOLIDWORKS",
+                    domain: "MECHANICAL",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "Advanced SOLIDWORKS course covering complex part modeling, surface modeling, assemblies, simulation and CAM basics."
+                }
+
+            ]
+
+        },
 
         "Civil": {}
 
