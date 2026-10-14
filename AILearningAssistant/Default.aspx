@@ -1142,7 +1142,118 @@
 
         },
 
-        "Circuit": {},
+        "Circuit": {
+
+            "Beginner": [
+
+                {
+                    name: "Embedded Systems",
+                    domain: "CIRCUIT",
+                    level: "Beginner",
+                    duration: "3 Months",
+                    description:
+                        "Embedded systems course covering microcontrollers, embedded C programming, and hardware interfacing.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=embedded-systems&category=circuit"
+                },
+
+                {
+                    name: "PCB Workshop \u2013 Real Time Techniques",
+                    domain: "CIRCUIT",
+                    level: "Beginner",
+                    duration: "1 Month",
+                    description:
+                        "Hands-on PCB workshop covering real-time PCB design, etching, schematic and layout techniques.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=pcb-workshop&category=circuit"
+                }
+
+            ],
+
+            "Moderate": [
+
+                {
+                    name: "PCB & Circuit Design",
+                    domain: "CIRCUIT",
+                    level: "Intermediate",
+                    duration: "3 Months",
+                    description:
+                        "Intermediate PCB and circuit design course focusing on circuit understanding, schematic design, basic PCB layout and simulation.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=pcb-circuit-design-intermediate&category=circuit"
+                }
+
+            ],
+
+            "Advanced": [
+
+                {
+                    name: "PCB & Circuit Design",
+                    domain: "CIRCUIT",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Professional PCB and circuit design course covering schematic creation, PCB layout, simulation, and industry tools.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=pcb-circuit-design&category=circuit"
+                },
+
+                {
+                    name: "PLC & SCADA",
+                    domain: "CIRCUIT",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "Industrial automation course covering PLC programming, SCADA systems, and real-time control.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=plc-scada&category=circuit"
+                },
+
+                {
+                    name: "LabVIEW",
+                    domain: "CIRCUIT",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "LabVIEW programming course focusing on graphical programming, DAQ systems, and hardware interfacing.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=labview&category=circuit"
+                },
+
+                {
+                    name: "Embedded Systems",
+                    domain: "CIRCUIT",
+                    level: "Advanced",
+                    duration: "6 Months",
+                    description:
+                        "Advanced embedded systems program focusing on embedded C, protocols, RTOS, and real-time Linux.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=advanced-embedded-systems&category=circuit"
+                },
+
+                {
+                    name: "VLSI Design",
+                    domain: "CIRCUIT",
+                    level: "Advanced",
+                    duration: "3 Months",
+                    description:
+                        "VLSI design course covering MOS devices, digital systems, and logic design.",
+                    url:
+                        "https://unitedsofttech.co.in/CourseDetails.aspx?id=vlsi-design&category=circuit"
+                },
+
+                {
+                    name: "MATLAB",
+                    domain: "CIRCUIT",
+                    level: "Advanced",
+                    duration: "4 Months",
+                    description:
+                        "Comprehensive MATLAB course covering programming, simulation, signal processing, image processing and Simulink."
+                }
+
+            ]
+
+        },
 
         "Mechanical": {},
 
@@ -1806,6 +1917,35 @@
         detail.className = "course-detail-box";
 
 
+        /*
+         * Only show the View Details link when a verified URL exists
+         */
+
+        var detailsLink = "";
+
+        if (course.url) {
+
+            detailsLink =
+
+                "<a class='course-details-button' " +
+
+                    "href='" +
+
+                    course.url +
+
+                    "' " +
+
+                    "target='_blank' " +
+
+                    "rel='noopener noreferrer'>" +
+
+                    "View Details" +
+
+                "</a>";
+
+        }
+
+
         detail.innerHTML =
 
             "<div class='course-detail-title'>" +
@@ -1844,21 +1984,7 @@
 
             "<div class='detail-actions'>" +
 
-                "<a class='course-details-button' " +
-
-                    "href='" +
-
-                    course.url +
-
-                    "' " +
-
-                    "target='_blank' " +
-
-                    "rel='noopener noreferrer'>" +
-
-                    "View Details" +
-
-                "</a>" +
+                detailsLink +
 
                 "<button type='button' class='it-back-button'>" +
 
