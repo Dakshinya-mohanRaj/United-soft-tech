@@ -313,8 +313,348 @@
     }
 
     /* =========================
-       CHAT AREA
+       ENROLLMENT POPUP
        ========================= */
+
+    .enroll-popup-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        padding: 16px;
+    }
+
+    .enroll-popup {
+        width: 100%;
+        max-width: 460px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 16px 45px rgba(31, 41, 55, 0.25);
+        max-height: 92vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .enroll-popup-header {
+        height: 56px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #667eea;
+        border-bottom: 1px solid #5a6fd8;
+        flex-shrink: 0;
+    }
+
+    .enroll-popup-title {
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .enroll-popup-close {
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0 8px;
+    }
+
+    .enroll-progress {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 12px 16px;
+        background: #f7f9ff;
+        border-bottom: 1px solid #edf0f8;
+        flex-shrink: 0;
+    }
+
+    .enroll-progress-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        text-align: center;
+    }
+
+    .enroll-progress-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #e2e7f2;
+        color: #8a94a6;
+        font-size: 11px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .enroll-progress-label {
+        font-size: 9.5px;
+        font-weight: 600;
+        color: #8a94a6;
+        line-height: 1.2;
+    }
+
+    .enroll-progress-item.done .enroll-progress-dot {
+        background: #35b86f;
+        color: #ffffff;
+    }
+
+    .enroll-progress-item.active .enroll-progress-dot {
+        background: #667eea;
+        color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .enroll-progress-item.active .enroll-progress-label {
+        color: #667eea;
+    }
+
+    .enroll-popup-body {
+        padding: 16px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex: 1;
+    }
+
+    .enroll-popup-body::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .enroll-popup-body::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .enroll-popup-body::-webkit-scrollbar-thumb {
+        background: #d7dbe5;
+        border-radius: 10px;
+    }
+
+    .enroll-section-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #172033;
+        margin-bottom: 12px;
+    }
+
+    .enroll-summary-card {
+        background: #f7f9ff;
+        border: 1px solid #e6ebf7;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 14px;
+    }
+
+    .enroll-summary-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 13px;
+        padding: 5px 0;
+    }
+
+    .enroll-summary-row .enroll-summary-key {
+        color: #8a94a6;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+
+    .enroll-summary-row .enroll-summary-value {
+        color: #364152;
+        font-weight: 700;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
+    .enroll-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+
+    .enroll-label {
+        color: #172033;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .enroll-input,
+    .enroll-select,
+    .enroll-textarea {
+        padding: 10px 12px;
+        border: 1px solid #dfe3ea;
+        border-radius: 10px;
+        font-size: 13px;
+        font-family: inherit;
+        background: #ffffff;
+        color: #374151;
+        width: 100%;
+    }
+
+    .enroll-input:focus,
+    .enroll-select:focus,
+    .enroll-textarea:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+
+    .enroll-textarea {
+        resize: vertical;
+        min-height: 70px;
+    }
+
+    .enroll-error {
+        color: #dc2626;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .enroll-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 6px;
+    }
+
+    .enroll-btn {
+        flex: 1 1 120px;
+        padding: 11px 16px;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+    }
+
+    .enroll-btn-primary {
+        border: 1px solid transparent;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #ffffff;
+    }
+
+    .enroll-btn-secondary {
+        border: 1px solid #dbe2ea;
+        background: #ffffff;
+        color: #53657d;
+    }
+
+    .enroll-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .enroll-payment-options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .enroll-payment-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 12px;
+        border: 1px solid #dfe3ea;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .enroll-payment-option.selected {
+        border-color: #667eea;
+        background: #f2f4ff;
+        color: #172033;
+    }
+
+    .enroll-payment-option input {
+        accent-color: #667eea;
+    }
+
+    .enroll-note {
+        background: #fff8e6;
+        border: 1px solid #f3e2b3;
+        border-radius: 10px;
+        padding: 10px 12px;
+        color: #8a6d1a;
+        font-size: 12px;
+        line-height: 1.5;
+        margin-bottom: 14px;
+    }
+
+    .enroll-processing {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        padding: 30px 10px;
+    }
+
+    .enroll-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e2e7f2;
+        border-top-color: #667eea;
+        border-radius: 50%;
+        animation: enrollSpin 0.8s linear infinite;
+    }
+
+    @keyframes enrollSpin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .enroll-result {
+        text-align: center;
+        padding: 8px 0;
+    }
+
+    .enroll-result-icon {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        background: #e7f7ee;
+        color: #35b86f;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .enroll-result-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #172033;
+        margin-bottom: 8px;
+    }
+
+    .enroll-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        background: #fdecec;
+        color: #c0392b;
+        font-size: 11px;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
 
     .chat-area {
         position: relative;
@@ -608,6 +948,35 @@
         transition: all 0.2s ease;
     }
 
+    .enroll-now-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 10px 16px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .detail-actions-primary {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .detail-actions-primary .course-details-button,
+    .detail-actions-primary .enroll-now-button {
+        flex: 1 1 160px;
+        width: auto;
+    }
+
     /* =========================
        NO COURSE
        ========================= */
@@ -758,6 +1127,7 @@
     .it-course-button,
     .it-back-button,
     .course-details-button,
+    .enroll-now-button,
     .call-button {
         position: relative;
         z-index: 0;
@@ -770,6 +1140,7 @@
     .it-course-button::before,
     .it-back-button::before,
     .course-details-button::before,
+    .enroll-now-button::before,
     .call-button::before {
         content: "";
         position: absolute;
@@ -791,6 +1162,7 @@
     .it-course-button:hover::before,
     .it-back-button:hover::before,
     .course-details-button:hover::before,
+    .enroll-now-button:hover::before,
     .call-button:hover::before {
         animation: buttonGlow 1.6s ease-in-out infinite;
     }
@@ -870,6 +1242,19 @@
         .enquiry-popup {
             max-width: 100%;
             max-height: 95vh;
+        }
+
+        .enroll-popup {
+            max-width: 100%;
+            max-height: 96vh;
+        }
+
+        .enroll-progress-label {
+            font-size: 8.5px;
+        }
+
+        .enroll-actions {
+            flex-direction: column;
         }
 
     }
@@ -1009,6 +1394,18 @@
                     <div class="enquiry-success" id="enqSuccessMsg" style="display:none;"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- ENROLLMENT POPUP -->
+    <div id="enrollmentPopup" class="enroll-popup-overlay" style="display:none;">
+        <div class="enroll-popup">
+            <div class="enroll-popup-header">
+                <div class="enroll-popup-title">Enroll in Your Future</div>
+                <button type="button" class="enroll-popup-close" onclick="closeEnrollmentPopup()" title="Close">&times;</button>
+            </div>
+            <div class="enroll-progress" id="enrollProgress"></div>
+            <div class="enroll-popup-body" id="enrollBody"></div>
         </div>
     </div>
 
@@ -2378,7 +2775,17 @@
 
             "<div class='detail-actions'>" +
 
-                detailsLink +
+                "<div class='detail-actions-primary'>" +
+
+                    detailsLink +
+
+                    "<button type='button' class='enroll-now-button'>" +
+
+                        "Enroll Now" +
+
+                    "</button>" +
+
+                "</div>" +
 
                 "<button type='button' class='it-back-button'>" +
 
@@ -2436,6 +2843,24 @@
                     showLevelPanel(domainName);
 
                 }
+
+            };
+
+        }
+
+
+        var enrollButton =
+            detail.querySelector(".enroll-now-button");
+
+        if (enrollButton) {
+
+            enrollButton.onclick = function () {
+
+                openEnrollmentPopup(
+                    course,
+                    domainName,
+                    level
+                );
 
             };
 
@@ -2643,6 +3068,914 @@
             closeEnquiryPopup();
         }
     });
+
+
+    /* ==========================================
+       COURSE ENROLLMENT (FRONTEND DEMO ONLY)
+       No backend, no real payment.
+       ========================================== */
+
+    var ENROLL_STEPS = [
+        { key: 1, label: "Course" },
+        { key: 2, label: "Details" },
+        { key: 3, label: "Review" },
+        { key: 4, label: "Payment" },
+        { key: 5, label: "Done" }
+    ];
+
+    var enrollmentState = null;
+
+
+    /* ------------------------------------------
+       STATE
+       ------------------------------------------ */
+
+    function createEmptyEnrollmentState() {
+
+        return {
+
+            step: 1,
+
+            course: null,
+
+            domain: "",
+
+            level: "",
+
+            details: {
+                fullName: "",
+                email: "",
+                mobile: "",
+                college: "",
+                department: "",
+                year: "",
+                studentId: "",
+                message: ""
+            },
+
+            paymentMethod: "",
+
+            paymentError: "",
+
+            reference: "",
+
+            busy: false
+
+        };
+
+    }
+
+    function getCourseFee(course) {
+
+        /*
+         * Only use a fee that already exists in the frontend
+         * course data. None is invented here.
+         */
+
+        if (
+            course &&
+            typeof course.fee !== "undefined" &&
+            course.fee !== null &&
+            String(course.fee).trim() !== ""
+        ) {
+
+            return String(course.fee);
+
+        }
+
+        return null;
+
+    }
+
+    function generateEnrollmentReference() {
+
+        return (
+            "DEMO-" +
+            Date.now().toString(36).toUpperCase() +
+            "-" +
+            Math.floor(Math.random() * 9000 + 1000)
+        );
+
+    }
+
+
+    /* ------------------------------------------
+       OPEN / CLOSE
+       ------------------------------------------ */
+
+    function openEnrollmentPopup(course, domainName, level) {
+
+        enrollmentState = createEmptyEnrollmentState();
+
+        enrollmentState.course = course;
+
+        enrollmentState.domain =
+            (course && course.domain)
+                ? course.domain
+                : (domainName || "");
+
+        enrollmentState.level =
+            (course && course.level)
+                ? course.level
+                : (level || "");
+
+        enrollmentState.step = 1;
+
+        var popup = document.getElementById("enrollmentPopup");
+
+        if (popup) {
+
+            popup.style.display = "flex";
+
+            popup.style.alignItems = "center";
+
+            popup.style.justifyContent = "center";
+
+            document.body.style.overflow = "hidden";
+
+        }
+
+        renderEnrollment();
+
+    }
+
+    function closeEnrollmentPopup() {
+
+        var popup = document.getElementById("enrollmentPopup");
+
+        if (popup) {
+            popup.style.display = "none";
+        }
+
+        document.body.style.overflow = "";
+
+        enrollmentState = null;
+
+    }
+
+    function cancelEnrollment() {
+
+        closeEnrollmentPopup();
+
+    }
+
+
+    /* ------------------------------------------
+       RENDER
+       ------------------------------------------ */
+
+    function renderEnrollment() {
+
+        if (!enrollmentState) {
+            return;
+        }
+
+        renderEnrollmentProgress();
+
+        var body = document.getElementById("enrollBody");
+
+        if (!body) {
+            return;
+        }
+
+        var html = "";
+
+        switch (enrollmentState.step) {
+
+            case 1:
+                html = buildEnrollmentStep1();
+                break;
+
+            case 2:
+                html = buildEnrollmentStep2();
+                break;
+
+            case 3:
+                html = buildEnrollmentStep3();
+                break;
+
+            case 4:
+                html = buildEnrollmentStep4();
+                break;
+
+            case 5:
+                html = buildEnrollmentStep5();
+                break;
+
+            default:
+                html = buildEnrollmentStep1();
+
+        }
+
+        body.innerHTML = html;
+
+        body.scrollTop = 0;
+
+    }
+
+    function renderEnrollmentProgress() {
+
+        var container = document.getElementById("enrollProgress");
+
+        if (!container) {
+            return;
+        }
+
+        var html = "";
+
+        for (var i = 0; i < ENROLL_STEPS.length; i++) {
+
+            var step = ENROLL_STEPS[i];
+
+            var cls = "enroll-progress-item";
+
+            var mark = String(step.key);
+
+            if (step.key < enrollmentState.step) {
+
+                cls += " done";
+
+                mark = "\u2713";
+
+            } else if (step.key === enrollmentState.step) {
+
+                cls += " active";
+
+            }
+
+            html +=
+
+                "<div class='" + cls + "'>" +
+
+                    "<div class='enroll-progress-dot'>" +
+                        mark +
+                    "</div>" +
+
+                    "<div class='enroll-progress-label'>" +
+                        escapeHtml(step.label) +
+                    "</div>" +
+
+                "</div>";
+
+        }
+
+        container.innerHTML = html;
+
+    }
+
+    function enrollSummaryRow(key, value) {
+
+        return "<div class='enroll-summary-row'>" +
+                    "<span class='enroll-summary-key'>" +
+                        escapeHtml(key) +
+                    "</span>" +
+                    "<span class='enroll-summary-value'>" +
+                        value +
+                    "</span>" +
+                "</div>";
+
+    }
+
+    function enrollField(label, id, type, value, placeholder) {
+
+        return "<div class='enroll-field'>" +
+                    "<label class='enroll-label'>" +
+                        escapeHtml(label) +
+                    "</label>" +
+                    "<input type='" + type + "' id='" + id + "' " +
+                        "class='enroll-input' " +
+                        "value='" + escapeHtml(value || "") + "' " +
+                        "placeholder='" + escapeHtml(placeholder || "") + "' />" +
+                    "<div class='enroll-error' id='" + id + "Error'></div>" +
+                "</div>";
+
+    }
+
+
+    /* ------------------------------------------
+       STEP 1 - CONFIRM COURSE
+       ------------------------------------------ */
+
+    function buildEnrollmentStep1() {
+
+        var course = enrollmentState.course || {};
+
+        var fee = getCourseFee(course);
+
+        var feeText = fee
+            ? escapeHtml(fee)
+            : "Fee to be announced";
+
+        return "<div class='enroll-section-title'>Confirm Course</div>" +
+
+            "<div class='enroll-summary-card'>" +
+
+                enrollSummaryRow(
+                    "Course",
+                    escapeHtml(course.name || "")
+                ) +
+
+                enrollSummaryRow(
+                    "Domain",
+                    escapeHtml(enrollmentState.domain || "")
+                ) +
+
+                enrollSummaryRow(
+                    "Duration",
+                    escapeHtml(course.duration || "")
+                ) +
+
+                enrollSummaryRow(
+                    "Learning Level",
+                    escapeHtml(enrollmentState.level || "")
+                ) +
+
+                enrollSummaryRow(
+                    "Course Fee",
+                    feeText
+                ) +
+
+            "</div>" +
+
+            "<div class='enroll-actions'>" +
+
+                "<button type='button' class='enroll-btn enroll-btn-secondary' " +
+                    "onclick='cancelEnrollment()'>" +
+                    "Cancel" +
+                "</button>" +
+
+                "<button type='button' class='enroll-btn enroll-btn-primary' " +
+                    "onclick='goToEnrollmentStep(2)'>" +
+                    "Continue to Enrollment" +
+                "</button>" +
+
+            "</div>";
+
+    }
+
+
+    /* ------------------------------------------
+       STEP 2 - STUDENT DETAILS
+       ------------------------------------------ */
+
+    function buildEnrollmentStep2() {
+
+        var d = enrollmentState.details;
+
+        var years = [
+            "1st Year",
+            "2nd Year",
+            "3rd Year",
+            "4th Year",
+            "Other"
+        ];
+
+        var yearOptions =
+            "<option value=''>-- Select Year --</option>";
+
+        for (var i = 0; i < years.length; i++) {
+
+            yearOptions +=
+                "<option value='" + escapeHtml(years[i]) + "'" +
+                    (d.year === years[i] ? " selected" : "") +
+                    ">" +
+                    escapeHtml(years[i]) +
+                "</option>";
+
+        }
+
+        return "<div class='enroll-section-title'>Student Details</div>" +
+
+            enrollField("Full Name *", "enrollFullName", "text",
+                d.fullName, "Enter your full name") +
+
+            enrollField("Email Address *", "enrollEmail", "email",
+                d.email, "Enter your email address") +
+
+            enrollField("Mobile Number *", "enrollMobile", "tel",
+                d.mobile, "10 digit mobile number") +
+
+            enrollField("College / Institution Name *", "enrollCollege", "text",
+                d.college, "Enter your college or institution") +
+
+            enrollField("Department / Branch *", "enrollDepartment", "text",
+                d.department, "Enter your department or branch") +
+
+            "<div class='enroll-field'>" +
+                "<label class='enroll-label'>Current Year of Study *</label>" +
+                "<select id='enrollYear' class='enroll-select'>" +
+                    yearOptions +
+                "</select>" +
+                "<div class='enroll-error' id='enrollYearError'></div>" +
+            "</div>" +
+
+            enrollField("Student ID / Register Number (optional)",
+                "enrollStudentId", "text",
+                d.studentId, "Enter your student ID or register number") +
+
+            "<div class='enroll-field'>" +
+                "<label class='enroll-label'>Additional Message (optional)</label>" +
+                "<textarea id='enrollMessage' class='enroll-textarea' " +
+                    "placeholder='Anything you would like to add...'>" +
+                    escapeHtml(d.message || "") +
+                "</textarea>" +
+            "</div>" +
+
+            "<div class='enroll-actions'>" +
+
+                "<button type='button' class='enroll-btn enroll-btn-secondary' " +
+                    "onclick='goToEnrollmentStep(1)'>" +
+                    "Back" +
+                "</button>" +
+
+                "<button type='button' class='enroll-btn enroll-btn-primary' " +
+                    "onclick='goToEnrollmentStep(3)'>" +
+                    "Continue" +
+                "</button>" +
+
+            "</div>";
+
+    }
+
+    function saveStep2Inputs() {
+
+        if (!enrollmentState) {
+            return;
+        }
+
+        function val(id) {
+            var el = document.getElementById(id);
+            return el ? el.value.trim() : "";
+        }
+
+        var d = enrollmentState.details;
+
+        d.fullName = val("enrollFullName");
+        d.email = val("enrollEmail");
+        d.mobile = val("enrollMobile");
+        d.college = val("enrollCollege");
+        d.department = val("enrollDepartment");
+        d.year = val("enrollYear");
+        d.studentId = val("enrollStudentId");
+
+        var msg = document.getElementById("enrollMessage");
+        d.message = msg ? msg.value.trim() : "";
+
+    }
+
+    function clearEnrollError(id) {
+        var el = document.getElementById(id);
+        if (el) {
+            el.textContent = "";
+        }
+    }
+
+    function setEnrollError(id, message) {
+        var el = document.getElementById(id);
+        if (el) {
+            el.textContent = message;
+        }
+    }
+
+    function validateStep2() {
+
+        var d = enrollmentState.details;
+
+        var ok = true;
+
+        clearEnrollError("enrollFullNameError");
+        clearEnrollError("enrollEmailError");
+        clearEnrollError("enrollMobileError");
+        clearEnrollError("enrollCollegeError");
+        clearEnrollError("enrollDepartmentError");
+        clearEnrollError("enrollYearError");
+
+        if (d.fullName === "") {
+            setEnrollError("enrollFullNameError", "Full name is required");
+            ok = false;
+        }
+
+        if (d.email === "") {
+            setEnrollError("enrollEmailError", "Email address is required");
+            ok = false;
+        } else if (!validateEmail(d.email)) {
+            setEnrollError("enrollEmailError", "Please enter a valid email address");
+            ok = false;
+        }
+
+        if (d.mobile === "") {
+            setEnrollError("enrollMobileError", "Mobile number is required");
+            ok = false;
+        } else if (!validateIndianPhone(d.mobile)) {
+            setEnrollError("enrollMobileError", "Please enter a valid mobile number");
+            ok = false;
+        }
+
+        if (d.college === "") {
+            setEnrollError("enrollCollegeError", "College / institution name is required");
+            ok = false;
+        }
+
+        if (d.department === "") {
+            setEnrollError("enrollDepartmentError", "Department / branch is required");
+            ok = false;
+        }
+
+        if (d.year === "") {
+            setEnrollError("enrollYearError", "Year of study is required");
+            ok = false;
+        }
+
+        return ok;
+
+    }
+
+
+    /* ------------------------------------------
+       STEP 3 - REVIEW
+       ------------------------------------------ */
+
+    function buildEnrollmentStep3() {
+
+        var course = enrollmentState.course || {};
+
+        var d = enrollmentState.details;
+
+        var fee = getCourseFee(course);
+
+        var studentRows =
+            enrollSummaryRow("Full Name", escapeHtml(d.fullName)) +
+            enrollSummaryRow("Email", escapeHtml(d.email)) +
+            enrollSummaryRow("Mobile", escapeHtml(d.mobile)) +
+            enrollSummaryRow("College", escapeHtml(d.college)) +
+            enrollSummaryRow("Department", escapeHtml(d.department)) +
+            enrollSummaryRow("Year of Study", escapeHtml(d.year));
+
+        if (d.studentId !== "") {
+            studentRows += enrollSummaryRow("Student ID", escapeHtml(d.studentId));
+        }
+
+        if (d.message !== "") {
+            studentRows += enrollSummaryRow("Message", escapeHtml(d.message));
+        }
+
+        return "<div class='enroll-section-title'>Review Enrollment</div>" +
+
+            "<div class='enroll-summary-card'>" +
+
+                enrollSummaryRow("Course", escapeHtml(course.name || "")) +
+
+                enrollSummaryRow("Domain", escapeHtml(enrollmentState.domain || "")) +
+
+                enrollSummaryRow("Duration", escapeHtml(course.duration || "")) +
+
+                enrollSummaryRow("Learning Level", escapeHtml(enrollmentState.level || "")) +
+
+                enrollSummaryRow(
+                    "Course Fee",
+                    fee ? escapeHtml(fee) : "Fee to be announced"
+                ) +
+
+            "</div>" +
+
+            "<div class='enroll-section-title'>Student Details</div>" +
+
+            "<div class='enroll-summary-card'>" +
+                studentRows +
+            "</div>" +
+
+            "<div class='enroll-actions'>" +
+
+                "<button type='button' class='enroll-btn enroll-btn-secondary' " +
+                    "onclick='goToEnrollmentStep(2)'>" +
+                    "Edit Details" +
+                "</button>" +
+
+                "<button type='button' class='enroll-btn enroll-btn-primary' " +
+                    "onclick='goToEnrollmentStep(4)'>" +
+                    "Proceed to Payment" +
+                "</button>" +
+
+            "</div>";
+
+    }
+
+
+    /* ------------------------------------------
+       STEP 4 - DEMO PAYMENT
+       ------------------------------------------ */
+
+    function buildEnrollmentStep4() {
+
+        var course = enrollmentState.course || {};
+
+        var fee = getCourseFee(course);
+
+        var header =
+            "<div class='enroll-section-title'>Demo Payment</div>" +
+
+            "<div class='enroll-summary-card'>" +
+
+                enrollSummaryRow("Course", escapeHtml(course.name || "")) +
+
+                enrollSummaryRow(
+                    "Amount",
+                    fee ? escapeHtml(fee) : "Fee to be announced"
+                ) +
+
+            "</div>";
+
+        /*
+         * When no fee exists in the frontend data we must NOT invent
+         * an amount or simulate a successful payment.
+         */
+
+        if (!fee) {
+
+            return header +
+
+                "<div class='enroll-note'>" +
+                    "<strong>Fee confirmation required.</strong> " +
+                    "The course fee is not available in the frontend data, " +
+                    "so this demo cannot show an amount or simulate a payment. " +
+                    "Please return to the enrollment summary." +
+                "</div>" +
+
+                "<div class='enroll-actions'>" +
+
+                    "<button type='button' class='enroll-btn enroll-btn-secondary' " +
+                        "onclick='goToEnrollmentStep(3)'>" +
+                        "Back to Summary" +
+                    "</button>" +
+
+                "</div>";
+
+        }
+
+        var methods = [
+            "UPI",
+            "Credit / Debit Card",
+            "Net Banking"
+        ];
+
+        var optionsHtml = "";
+
+        for (var i = 0; i < methods.length; i++) {
+
+            var selected =
+                enrollmentState.paymentMethod === methods[i]
+                    ? " selected"
+                    : "";
+
+            optionsHtml +=
+                "<label class='enroll-payment-option" + selected + "'>" +
+                    "<input type='radio' name='enrollPayment' " +
+                        (enrollmentState.paymentMethod === methods[i]
+                            ? "checked "
+                            : "") +
+                        "onclick='selectPaymentMethod(\"" +
+                            escapeHtml(methods[i]) +
+                        "\")' />" +
+                    escapeHtml(methods[i]) +
+                "</label>";
+
+        }
+
+        var errorHtml = enrollmentState.paymentError
+            ? "<div class='enroll-error' style='margin-bottom:12px;'>" +
+                escapeHtml(enrollmentState.paymentError) +
+              "</div>"
+            : "";
+
+        return header +
+
+            "<div class='enroll-note'>" +
+                "This is a <strong>demo payment screen</strong>. No real payment " +
+                "gateway is connected. Do not enter real card numbers, CVV, UPI PIN " +
+                "or banking passwords. No credentials are collected or stored." +
+            "</div>" +
+
+            "<div class='enroll-payment-options'>" +
+                optionsHtml +
+            "</div>" +
+
+            errorHtml +
+
+            "<div class='enroll-actions'>" +
+
+                "<button type='button' class='enroll-btn enroll-btn-secondary' " +
+                    "onclick='goToEnrollmentStep(3)'>" +
+                    "Back" +
+                "</button>" +
+
+                "<button type='button' class='enroll-btn enroll-btn-primary' " +
+                    "onclick='simulatePayment()'>" +
+                    "Simulate Payment" +
+                "</button>" +
+
+            "</div>";
+
+    }
+
+    function selectPaymentMethod(method) {
+
+        if (!enrollmentState || enrollmentState.busy) {
+            return;
+        }
+
+        enrollmentState.paymentMethod = method;
+
+        enrollmentState.paymentError = "";
+
+        renderEnrollment();
+
+    }
+
+    function simulatePayment() {
+
+        if (!enrollmentState || enrollmentState.busy) {
+            return;
+        }
+
+        var fee = getCourseFee(enrollmentState.course);
+
+        /*
+         * Never simulate a successful paid transaction without a known fee.
+         */
+
+        if (!fee) {
+            return;
+        }
+
+        if (enrollmentState.paymentMethod === "") {
+
+            enrollmentState.paymentError =
+                "Please select a payment method to continue.";
+
+            renderEnrollment();
+
+            return;
+
+        }
+
+        enrollmentState.paymentError = "";
+
+        enrollmentState.busy = true;
+
+        var body = document.getElementById("enrollBody");
+
+        if (body) {
+
+            body.innerHTML =
+                "<div class='enroll-processing'>" +
+                    "<div class='enroll-spinner'></div>" +
+                    "<div>Processing your demo payment...</div>" +
+                    "<div class='enroll-note' style='margin-bottom:0;'>" +
+                        "Demo only \u2014 no real money is transferred." +
+                    "</div>" +
+                "</div>";
+
+        }
+
+        setTimeout(function () {
+
+            if (!enrollmentState) {
+                return;
+            }
+
+            enrollmentState.busy = false;
+
+            enrollmentState.reference =
+                generateEnrollmentReference();
+
+            enrollmentState.step = 5;
+
+            renderEnrollment();
+
+        }, 1800);
+
+    }
+
+
+    /* ------------------------------------------
+       STEP 5 - DEMO CONFIRMATION
+       ------------------------------------------ */
+
+    function buildEnrollmentStep5() {
+
+        var course = enrollmentState.course || {};
+
+        var d = enrollmentState.details;
+
+        var fee = getCourseFee(course);
+
+        var rows =
+            enrollSummaryRow("Student Name", escapeHtml(d.fullName)) +
+            enrollSummaryRow("Course", escapeHtml(course.name || "")) +
+            enrollSummaryRow("Domain", escapeHtml(enrollmentState.domain || "")) +
+            enrollSummaryRow("Learning Level", escapeHtml(enrollmentState.level || "")) +
+            enrollSummaryRow("Duration", escapeHtml(course.duration || "")) +
+            enrollSummaryRow(
+                "Course Fee",
+                fee ? escapeHtml(fee) : "Fee to be announced"
+            ) +
+            enrollSummaryRow(
+                "Enrollment Reference",
+                escapeHtml(enrollmentState.reference)
+            );
+
+        return "<div class='enroll-result'>" +
+
+            "<div class='enroll-result-icon'>\u2713</div>" +
+
+            "<div class='enroll-result-title'>Demo Enrollment Completed!</div>" +
+
+            "<div class='enroll-badge'>Demo Only \u2014 No Real Payment</div>" +
+
+            "<div class='enroll-summary-card' style='text-align:left;'>" +
+                rows +
+            "</div>" +
+
+            "<div class='enroll-note' style='text-align:left;'>" +
+                "This is a frontend demonstration only. You have not been " +
+                "officially enrolled, no data was saved to a server, and no " +
+                "payment was received." +
+            "</div>" +
+
+            "<div class='enroll-actions'>" +
+
+                "<button type='button' class='enroll-btn enroll-btn-primary' " +
+                    "onclick='enrollBackToChatbot()'>" +
+                    "Back to Chatbot" +
+                "</button>" +
+
+            "</div>" +
+
+        "</div>";
+
+    }
+
+    function enrollBackToChatbot() {
+
+        closeEnrollmentPopup();
+
+    }
+
+
+    /* ------------------------------------------
+       NAVIGATION
+       ------------------------------------------ */
+
+    function goToEnrollmentStep(stepNumber) {
+
+        if (!enrollmentState || enrollmentState.busy) {
+            return;
+        }
+
+        /*
+         * Preserve entered details when moving between steps.
+         */
+
+        if (enrollmentState.step === 2 && stepNumber !== 2) {
+
+            saveStep2Inputs();
+
+            var movingForward = stepNumber > 2;
+
+            if (movingForward && !validateStep2()) {
+                return;
+            }
+
+        }
+
+        enrollmentState.step = stepNumber;
+
+        renderEnrollment();
+
+    }
+
+
+    /* ------------------------------------------
+       OVERLAY BACKDROP CLOSE
+       ------------------------------------------ */
+
+    (function () {
+
+        var overlay = document.getElementById("enrollmentPopup");
+
+        if (overlay) {
+
+            overlay.addEventListener("click", function (e) {
+
+                if (e.target === overlay) {
+                    closeEnrollmentPopup();
+                }
+
+            });
+
+        }
+
+    })();
 
 </script>
 
