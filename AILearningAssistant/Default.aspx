@@ -146,6 +146,172 @@
         transform: scale(1.05);
     }
 
+    .enquiry-header-btn {
+        height: 42px;
+        padding: 0 18px;
+        border: none;
+        border-radius: 12px;
+        background: #667eea;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+    }
+
+    .enquiry-header-btn:hover {
+        opacity: 0.95;
+        transform: scale(1.02);
+    }
+
+    /* =========================
+       ENQUIRY POPUP
+       ========================= */
+
+    .enquiry-popup-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        padding: 16px;
+    }
+
+    .enquiry-popup {
+        width: 100%;
+        max-width: 420px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 16px 45px rgba(31, 41, 55, 0.25);
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .enquiry-popup-header {
+        height: 56px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #667eea;
+        border-bottom: 1px solid #5a6fd8;
+    }
+
+    .enquiry-popup-title {
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .enquiry-popup-close {
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0 8px;
+    }
+
+    .enquiry-popup-body {
+        padding: 16px;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    .enquiry-popup-body::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .enquiry-popup-body::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .enquiry-popup-body::-webkit-scrollbar-thumb {
+        background: #d7dbe5;
+        border-radius: 10px;
+    }
+
+    .enquiry-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .enquiry-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .enquiry-label {
+        color: #172033;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .enquiry-input,
+    .enquiry-select,
+    .enquiry-textarea {
+        padding: 10px 12px;
+        border: 1px solid #dfe3ea;
+        border-radius: 10px;
+        font-size: 13px;
+        font-family: inherit;
+        background: #ffffff;
+        color: #374151;
+        width: 100%;
+    }
+
+    .enquiry-input:focus,
+    .enquiry-select:focus,
+    .enquiry-textarea:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+
+    .enquiry-textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .enquiry-error {
+        color: #dc2626;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .enquiry-success {
+        color: #059669;
+        font-size: 12px;
+        font-weight: 600;
+        text-align: center;
+        padding: 8px;
+    }
+
+    .enquiry-send-btn {
+        width: 100%;
+        padding: 11px 16px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 4px;
+    }
+
+    .enquiry-send-btn:hover {
+        opacity: 0.95;
+    }
+
     /* =========================
        CHAT AREA
        ========================= */
@@ -701,6 +867,11 @@
             padding: 17px;
         }
 
+        .enquiry-popup {
+            max-width: 100%;
+            max-height: 95vh;
+        }
+
     }
 
 </style>
@@ -749,14 +920,24 @@
                 </div>
 
 
-                <button type="button"
-                        class="call-button"
-                        onclick="makeCall()"
-                        title="Voice Assistance">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <button type="button"
+                            id="enquiryBtn"
+                            class="enquiry-header-btn"
+                            onclick="openEnquiryPopup(event); return false;"
+                            title="Enquiry">
+                        Enquiry
+                    </button>
 
-                    ☎
+                    <button type="button"
+                            class="call-button"
+                            onclick="makeCall()"
+                            title="Voice Assistance">
 
-                </button>
+                        ☎
+
+                    </button>
+                </div>
 
             </div>
 
@@ -775,6 +956,60 @@
 
         </div>
 
+    </div>
+
+    <!-- ENQUIRY POPUP -->
+    <div id="enquiryPopup" class="enquiry-popup-overlay" style="display:none;">
+        <div class="enquiry-popup">
+            <div class="enquiry-popup-header">
+                <div class="enquiry-popup-title">Enquiry</div>
+                <button type="button" class="enquiry-popup-close" onclick="closeEnquiryPopup()" title="Close">×</button>
+            </div>
+            <div class="enquiry-popup-body">
+                <div class="enquiry-form">
+                    <div class="enquiry-field">
+                        <label class="enquiry-label">Your Name</label>
+                        <input type="text" id="enqName" class="enquiry-input" placeholder="Enter your name" />
+                        <div class="enquiry-error" id="enqNameError"></div>
+                    </div>
+
+                    <div class="enquiry-field">
+                        <label class="enquiry-label">Email Address</label>
+                        <input type="email" id="enqEmail" class="enquiry-input" placeholder="Enter your email" />
+                        <div class="enquiry-error" id="enqEmailError"></div>
+                    </div>
+
+                    <div class="enquiry-field">
+                        <label class="enquiry-label">Phone Number</label>
+                        <input type="tel" id="enqPhone" class="enquiry-input" placeholder="Enter your phone number" />
+                        <div class="enquiry-error" id="enqPhoneError"></div>
+                    </div>
+
+                    <div class="enquiry-field">
+                        <label class="enquiry-label">Select Category</label>
+                        <select id="enqCategory" class="enquiry-select">
+                            <option value="">-- Select Category --</option>
+                            <option value="Courses and Training">Courses and Training</option>
+                            <option value="PhD">PhD</option>
+                            <option value="College Project">College Project</option>
+                            <option value="Journal">Journal</option>
+                            <option value="Products and Kits">Products and Kits</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <div class="enquiry-error" id="enqCategoryError"></div>
+                    </div>
+
+                    <div class="enquiry-field">
+                        <label class="enquiry-label">Tell Your Enquiry Message</label>
+                        <textarea id="enqMessage" class="enquiry-textarea" placeholder="Enter your enquiry message here..." rows="4"></textarea>
+                        <div class="enquiry-error" id="enqMessageError"></div>
+                    </div>
+
+                    <button type="button" class="enquiry-send-btn" onclick="submitEnquiryForm()">Send Enquiry</button>
+                    <div class="enquiry-success" id="enqSuccessMsg" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -2262,6 +2497,152 @@
         );
 
     }
+
+
+    /* ==========================================
+       ENQUIRY POPUP
+       ========================================== */
+
+    var isEnquirySubmitting = false;
+
+    function openEnquiryPopup(e) {
+        if (typeof e !== 'undefined' && e && e.preventDefault) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        var popup = document.getElementById('enquiryPopup');
+        if (popup) {
+            clearEnquiryForm();
+            popup.style.display = 'flex';
+            popup.style.alignItems = 'center';
+            popup.style.justifyContent = 'center';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeEnquiryPopup() {
+        var popup = document.getElementById('enquiryPopup');
+        if (popup) {
+            popup.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+
+    function clearEnquiryForm() {
+        document.getElementById('enqName').value = '';
+        document.getElementById('enqEmail').value = '';
+        document.getElementById('enqPhone').value = '';
+        document.getElementById('enqCategory').value = '';
+        document.getElementById('enqMessage').value = '';
+
+        document.getElementById('enqNameError').textContent = '';
+        document.getElementById('enqEmailError').textContent = '';
+        document.getElementById('enqPhoneError').textContent = '';
+        document.getElementById('enqCategoryError').textContent = '';
+        document.getElementById('enqMessageError').textContent = '';
+        document.getElementById('enqSuccessMsg').style.display = 'none';
+        isEnquirySubmitting = false;
+    }
+
+    function validateEmail(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validateIndianPhone(phone) {
+        var digits = phone.replace(/\D/g, '');
+        if (digits.length < 10 || digits.length > 15) {
+            return false;
+        }
+        if (digits.length === 11 && digits.charAt(0) === '0') {
+            return true;
+        }
+        if (digits.length === 12 && digits.charAt(0) === '9' && digits.charAt(1) === '1') {
+            return true;
+        }
+        if (digits.length === 13 && digits.substring(0, 2) === '91') {
+            return true;
+        }
+        if (digits.length === 10) {
+            return true;
+        }
+        return false;
+    }
+
+    function submitEnquiryForm() {
+        if (isEnquirySubmitting) {
+            return;
+        }
+
+        var name = document.getElementById('enqName').value.trim();
+        var email = document.getElementById('enqEmail').value.trim();
+        var phone = document.getElementById('enqPhone').value.trim();
+        var category = document.getElementById('enqCategory').value;
+        var message = document.getElementById('enqMessage').value.trim();
+
+        var valid = true;
+
+        document.getElementById('enqNameError').textContent = '';
+        document.getElementById('enqEmailError').textContent = '';
+        document.getElementById('enqPhoneError').textContent = '';
+        document.getElementById('enqCategoryError').textContent = '';
+        document.getElementById('enqMessageError').textContent = '';
+
+        if (name === '') {
+            document.getElementById('enqNameError').textContent = 'Name is required';
+            valid = false;
+        }
+
+        if (email === '') {
+            document.getElementById('enqEmailError').textContent = 'Email is required';
+            valid = false;
+        } else if (!validateEmail(email)) {
+            document.getElementById('enqEmailError').textContent = 'Please enter a valid email address';
+            valid = false;
+        }
+
+        if (phone === '') {
+            document.getElementById('enqPhoneError').textContent = 'Phone number is required';
+            valid = false;
+        } else if (!validateIndianPhone(phone)) {
+            document.getElementById('enqPhoneError').textContent = 'Please enter a valid phone number';
+            valid = false;
+        }
+
+        if (category === '') {
+            document.getElementById('enqCategoryError').textContent = 'Category is required';
+            valid = false;
+        }
+
+        if (message === '') {
+            document.getElementById('enqMessageError').textContent = 'Message is required';
+            valid = false;
+        }
+
+        if (!valid) {
+            return;
+        }
+
+        isEnquirySubmitting = true;
+
+        var successMsg = document.getElementById('enqSuccessMsg');
+        successMsg.textContent = 'Your enquiry has been submitted successfully!';
+        successMsg.style.display = 'block';
+
+        setTimeout(function () {
+            clearEnquiryForm();
+            closeEnquiryPopup();
+            addBotMessage("Your enquiry has been submitted successfully!");
+        }, 1500);
+    }
+
+    window.addEventListener('click', function (e) {
+        var popup = document.getElementById('enquiryPopup');
+        var popupBox = document.querySelector('.enquiry-popup');
+        if (popup && popup.style.display === 'flex' && popupBox && !popupBox.contains(e.target)) {
+            closeEnquiryPopup();
+        }
+    });
 
 </script>
 
